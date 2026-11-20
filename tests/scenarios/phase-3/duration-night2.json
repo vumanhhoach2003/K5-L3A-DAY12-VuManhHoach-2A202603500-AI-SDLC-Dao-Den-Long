@@ -1,0 +1,9 @@
+{
+  "random_motes": true,
+  "random_shades": true,
+  "random_drifters": true,
+  "wind_enabled": false,
+  "player": {
+    "invuln_ticks": 20000
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "random_motes": false,
+  "random_shades": false,
+  "random_drifters": false,
+  "wind_enabled": false,
+  "player": {
+    "carried": 6
+  },
+  "shades": [
+    {
+      "id": "Near",
+      "pos": [
+        5,
+        0.8,
+        0
+      ]
+    },
+    {
+      "id": "Above",
+      "pos": [
+        0,
+        6,
+        0
+      ]
+    }
+  ]
+}

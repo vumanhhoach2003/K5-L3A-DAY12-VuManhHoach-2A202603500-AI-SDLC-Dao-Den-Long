@@ -1,5 +1,7 @@
 import * as THREE from '../vendor/three.module.js';
 import {PALETTE as c} from './palette.mjs';
+import {accessibilityPalette,lanternAppearance} from './accessibility.mjs';
+import {protects} from './lanterns.mjs';
 const material=(color,options={})=>new THREE.MeshStandardMaterial({color,roughness:.9,...options});
 export class WorldView {
   constructor(canvas){
@@ -9,7 +11,7 @@ export class WorldView {
     this.scene=new THREE.Scene();this.scene.fog=new THREE.FogExp2(c.fog,.007);
     this.ambient=new THREE.HemisphereLight(0xc7d9ff,0x243d42,.15);this.scene.add(this.ambient);
     const moon=new THREE.DirectionalLight(0xc0d6ff,2);moon.position.set(-30,60,10);moon.castShadow=true;moon.shadow.mapSize.set(1024,1024);Object.assign(moon.shadow.camera,{left:-60,right:100,top:60,bottom:-60});this.scene.add(moon);
-    this.root=new THREE.Group();this.scene.add(this.root);this.motes=new Map();this.shades=new Map();this.drifters=new Map();this.charms=new Map();
+    this.root=new THREE.Group();this.scene.add(this.root);this.motes=new Map();this.shades=new Map();this.drifters=new Map();this.charms=new Map();this.colorblind=false;
     this.gold=material(c.mote,{emissive:c.halo,emissiveIntensity:1.8});this.shadeMaterial=material(c.shade,{emissive:c.shadeRim,emissiveIntensity:.12});
     this.player=this.createPlayer();this.scene.add(this.player);
     this.pulse=this.mesh(new THREE.RingGeometry(.94,1,48),new THREE.MeshBasicMaterial({color:c.lantern,transparent:true,opacity:0,side:THREE.DoubleSide}),this.scene);this.pulse.rotation.x=-Math.PI/2;this.pulseAge=10;
@@ -17,6 +19,7 @@ export class WorldView {
     this.resize();
   }
   mesh(geometry,mat,parent=this.root,pos=[0,0,0]){const m=new THREE.Mesh(geometry,mat);m.position.fromArray(pos);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
+  setAccessibility(enabled){this.colorblind=enabled;}
   createPlayer(){const p=new THREE.Group(),wood=material(c.wood);
     this.mesh(new THREE.ConeGeometry(.45,1.1,10),material(c.coat),p,[0,.85,0]);this.mesh(new THREE.SphereGeometry(.3,12,8),material(0xf0c79b),p,[0,1.55,0]);
     this.mesh(new THREE.ConeGeometry(.8,.45,24),material(c.sand),p,[0,1.96,0]);this.mesh(new THREE.TorusGeometry(.25,.09,6,12),material(c.scarf),p,[0,1.3,0]).rotation.x=Math.PI/2;
@@ -39,7 +42,18 @@ export class WorldView {
       for(const a of [Math.PI/6,5*Math.PI/6]){const geometry=new THREE.BufferGeometry();const vertices=[];for(const [r,y,side]of [[30,0,-1.5],[30,0,1.5],[24,3,-1.5],[24,3,1.5]])vertices.push(Math.cos(a)*r-Math.sin(a)*side,y+.02,Math.sin(a)*r+Math.cos(a)*side);geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.setIndex([0,2,1,1,2,3]);geometry.computeVertexNormals();this.mesh(geometry,material(c.sand,{side:THREE.DoubleSide}));}
     }
     for(const pad of game.map.pads){const v=this.mesh(new THREE.CylinderGeometry(1,1,.15,24),material(c.drifter,{emissive:c.drifter,emissiveIntensity:.5}),this.root,[pad.pos[0],pad.pos[1]+.075,pad.pos[2]]);this.padViews.push(v);}
-    for(const l of game.lanterns){const group=new THREE.Group();group.position.fromArray(l.pos);this.root.add(group);this.mesh(new THREE.CylinderGeometry(.22,.35,3.7,8),wood,group,[0,1.8,0]);const bulb=this.mesh(new THREE.CylinderGeometry(.85,.85,1.4,10),material(c.unlit,{emissive:c.lantern,emissiveIntensity:0}),group,[0,3.8,0]);const core=this.mesh(new THREE.SphereGeometry(.35,10,8),material(c.core,{emissive:c.core,emissiveIntensity:0}),group,[0,3.8,0]);this.mesh(new THREE.ConeGeometry(1.4,.75,6),material(c.wood),group,[0,4.9,0]);this.mesh(new THREE.CylinderGeometry(1.3,1.5,.25,10),stone,group,[0,.1,0]);const light=new THREE.PointLight(c.lantern,0,18,2);light.position.set(0,3.8,0);group.add(light);const ring=this.mesh(new THREE.RingGeometry(5.95,6,48),new THREE.MeshBasicMaterial({color:c.gold,transparent:true,opacity:0,side:THREE.DoubleSide}),group,[0,.025,0]);ring.rotation.x=-Math.PI/2;this.lamps.push({group,bulb,core,light,ring});}
+    for(const l of game.lanterns){
+      const group=new THREE.Group();group.position.fromArray(l.pos);this.root.add(group);this.mesh(new THREE.CylinderGeometry(.22,.35,3.7,8),wood,group,[0,1.8,0]);
+      const bulb=this.mesh(new THREE.CylinderGeometry(.85,.85,1.4,10),material(c.unlit,{emissive:c.lantern,emissiveIntensity:0}),group,[0,3.8,0]);
+      const core=this.mesh(new THREE.SphereGeometry(.35,10,8),material(c.core,{emissive:c.core,emissiveIntensity:0}),group,[0,3.8,0]);
+      this.mesh(new THREE.ConeGeometry(1.4,.75,6),material(c.wood),group,[0,4.9,0]);this.mesh(new THREE.CylinderGeometry(1.3,1.5,.25,10),stone,group,[0,.1,0]);
+      const tearShape=new THREE.Shape();tearShape.moveTo(-.14,-.4);tearShape.lineTo(.1,-.12);tearShape.lineTo(-.04,.04);tearShape.lineTo(.15,.36);tearShape.lineTo(.2,.08);tearShape.lineTo(.1,-.1);tearShape.lineTo(.18,-.4);tearShape.closePath();
+      const tear=this.mesh(new THREE.ShapeGeometry(tearShape),new THREE.MeshBasicMaterial({color:c.sky,side:THREE.DoubleSide}),group,[.1,3.8,.86]);
+      const bar=new THREE.Group();group.add(bar);bar.position.set(0,5.8,0);this.mesh(new THREE.PlaneGeometry(2,.23),new THREE.MeshBasicMaterial({color:c.sky,side:THREE.DoubleSide}),bar);
+      const fill=this.mesh(new THREE.PlaneGeometry(1.8,.13),new THREE.MeshBasicMaterial({color:c.gold,side:THREE.DoubleSide}),bar,[0,0,.01]);
+      const light=new THREE.PointLight(c.lantern,0,18,2);light.position.set(0,3.8,0);group.add(light);
+      const ring=this.mesh(new THREE.RingGeometry(5.95,6,48),new THREE.MeshBasicMaterial({color:c.gold,transparent:true,opacity:0,side:THREE.DoubleSide}),group,[0,.025,0]);ring.rotation.x=-Math.PI/2;this.lamps.push({group,bulb,core,light,ring,tear,bar,fill});
+    }
     // Separate renderer-only stars never consume simulation randomness.
     const stars=[];for(let i=0;i<240;i++)stars.push(Math.sin(i*43.3)*110,35+(i%60),Math.cos(i*19.7)*110);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(stars,3));this.root.add(new THREE.Points(geo,new THREE.PointsMaterial({color:c.text,size:.13})));
     this.camera.position.set(game.player.pos[0],game.player.pos[1]+18,game.player.pos[2]+22);this.yaw=0;
@@ -51,11 +65,16 @@ export class WorldView {
     const p=game.player;for(const layer of this.upperLayers){layer.mesh.material.transparent=p.pos[1]<layer.height-.2;layer.mesh.material.opacity=layer.mesh.material.transparent?.25:1;layer.mesh.material.depthWrite=!layer.mesh.material.transparent;}this.player.position.fromArray(p.pos);this.player.visible=!(game.invuln>0&&Math.floor(time*12)%2===0)&&game.respawn===0;this.player.rotation.y=Math.atan2(game.facing[0],game.facing[1]);
     const moving=Math.hypot(p.vel[0],p.vel[2])>.1;this.legs[0].rotation.x=moving?Math.sin(time*13)*.5:0;this.legs[1].rotation.x=-this.legs[0].rotation.x;
     this.sync(game.motes,this.motes,()=>{const v=this.mesh(new THREE.SphereGeometry(.16,6,6),this.gold);v.castShadow=false;return v;},(v,m)=>{v.position.set(m.pos[0],m.pos[1]+.55+Math.sin(time*3+m.pos[0])*.15,m.pos[2]);v.scale.setScalar(m.kind==='dropped'?.8:1);});
-    this.sync(game.shades,this.shades,()=>{const g=new THREE.Group();this.root.add(g);this.mesh(new THREE.SphereGeometry(.65,10,8),this.shadeMaterial.clone(),g);const rim=this.mesh(new THREE.TorusGeometry(.65,.035,4,20),material(c.shadeRim,{emissive:c.shadeRim,emissiveIntensity:1}),g);rim.rotation.x=Math.PI/2;for(const x of [-.2,.2])this.mesh(new THREE.SphereGeometry(.075,6,6),material(c.shadeRim,{emissive:c.shadeRim,emissiveIntensity:2}),g,[x,.1,.55]);return g;},(v,s)=>{v.position.fromArray(s.pos);v.position.y+=Math.sin(time*3)*.1;v.lookAt(p.pos[0],v.position.y,p.pos[2]);v.children[0].material.color.setHex(s.state==='stunned'?c.stunned:c.shade);v.scale.setScalar(s.state==='spawning'?.4:1);});
+    this.sync(game.shades,this.shades,()=>{const g=new THREE.Group();this.root.add(g);this.mesh(new THREE.SphereGeometry(.65,10,8),this.shadeMaterial.clone(),g);const rim=this.mesh(new THREE.TorusGeometry(.65,.035,4,20),material(c.shadeRim,{emissive:c.shadeRim,emissiveIntensity:1}),g);rim.rotation.x=Math.PI/2;for(const x of [-.2,.2])this.mesh(new THREE.SphereGeometry(.075,6,6),material(c.shadeRim,{emissive:c.shadeRim,emissiveIntensity:2}),g,[x,.1,.55]);return g;},(v,s)=>{v.position.fromArray(s.pos);v.position.y+=Math.sin(time*3)*.1;v.lookAt(p.pos[0],v.position.y,p.pos[2]);v.children[0].material.color.setHex(s.state==='stunned'?c.stunned:c.shade);v.scale.setScalar(s.state==='spawning'?.4:1);const accent=accessibilityPalette(this.colorblind).shadeAccent;for(const part of v.children.slice(1)){part.material.color.setHex(accent);part.material.emissive.setHex(accent);}});
     this.sync(game.drifters.filter(d=>d.state!=='removed'),this.drifters,()=>{const g=new THREE.Group();this.root.add(g);for(let i=0;i<5;i++)this.mesh(new THREE.PlaneGeometry(.4,.8),material(c.drifter,{side:THREE.DoubleSide,emissive:c.drifter,emissiveIntensity:.4}),g,[i*.25,0,0]);return g;},(v,d)=>{v.position.set(d.pos[0],d.pos[1]+.5,d.pos[2]);v.rotation.y=time;v.children.forEach((m,i)=>m.position.y=Math.sin(time*6-i)*.2);});
     this.sync(game.charms,this.charms,()=>{const v=this.mesh(new THREE.BoxGeometry(.45,.7,.08),material(c.scarf,{emissive:c.gold,emissiveIntensity:.2}));const border=this.mesh(new THREE.BoxGeometry(.52,.77,.04),material(c.gold),v,[0,0,-.04]);return v;},(v,ch)=>{v.visible=ch.available;v.position.set(ch.pos[0],ch.pos[1]+.8+Math.sin(time*2)*.12,ch.pos[2]);v.rotation.y=time;});
     const lit=game.lanterns.filter(l=>l.lit).length;this.ambient.intensity=.15+.55*lit/game.lanterns.length;
-    game.lanterns.forEach((l,i)=>{const v=this.lamps[i];v.bulb.material.color.setHex(l.lit?c.lantern:c.unlit);v.bulb.material.emissiveIntensity=l.lit?.8:0;v.core.material.emissiveIntensity=l.lit?2:0;v.light.intensity=l.lit?35:0;v.ring.material.opacity=l.lit?.22:0;});
+    game.lanterns.forEach((l,i)=>{
+      const v=this.lamps[i],appearance=lanternAppearance(l,game.sim_tick),brightness=appearance.blinkOn?1:.2;
+      v.bulb.material.color.setHex(l.lit?c.lantern:c.unlit);v.bulb.material.emissiveIntensity=l.lit?.8*brightness:0;v.bulb.scale.y=appearance.scaleY;v.core.scale.y=appearance.scaleY;v.tear.scale.y=appearance.scaleY;v.tear.visible=appearance.torn;
+      v.core.material.emissiveIntensity=l.lit?2*brightness:0;v.light.intensity=l.lit?35*brightness:0;v.ring.material.opacity=protects(l)?.22:0;
+      v.bar.visible=l.lit&&appearance.blinkOn;v.bar.quaternion.copy(this.camera.quaternion);v.fill.scale.x=appearance.fuelRatio;v.fill.position.x=-.9+.9*appearance.fuelRatio;v.fill.material.color.setHex(appearance.weak&&this.colorblind?0xffffff:c.gold);
+    });
     if(game.state!=='paused')this.pulseAge+=delta;this.pulse.material.opacity=Math.max(0,1-this.pulseAge/.5)*.7;this.pulse.scale.setScalar(Math.max(.01,this.pulseAge/.5*5));
     this.leaves.visible=game.wind.warning||game.wind.active;this.leaves.position.fromArray(p.pos);this.leaves.children.forEach((v,i)=>{const a=time*2+i;v.position.set(Math.sin(a)*5,1+(i%5),Math.cos(a)*5);v.rotation.z=a;});
     const target=new THREE.Vector3(p.pos[0],p.pos[1]+1.2,p.pos[2]);const desired=new THREE.Vector3(target.x+Math.sin(this.yaw)*16,target.y+13,target.z+Math.cos(this.yaw)*16);this.camera.position.lerp(desired,1-Math.exp(-8*delta));this.camera.lookAt(target);this.renderer.render(this.scene,this.camera);

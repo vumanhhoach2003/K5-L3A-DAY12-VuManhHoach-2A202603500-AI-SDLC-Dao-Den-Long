@@ -1,10 +1,10 @@
 import {spawnSync} from 'node:child_process';import {mkdirSync,writeFileSync,readFileSync,unlinkSync,existsSync} from 'node:fs';import {createHash} from 'node:crypto';import {cpus,platform,arch} from 'node:os';import assert from 'node:assert/strict';
-const output='docs/proof/phase-2';mkdirSync(output,{recursive:true});
+const output='docs/proof/phase-3';mkdirSync(output,{recursive:true});
 const tests=spawnSync(process.execPath,['--test'],{encoding:'utf8'});writeFileSync(`${output}/tests.txt`,tests.stdout+tests.stderr);if(tests.status!==0){console.error(tests.stdout,tests.stderr);process.exit(tests.status??1);}
-const runs=[],manifest=JSON.parse(readFileSync('tests/scenarios/phase-2/manifest.json'));
+const runs=[],manifest=JSON.parse(readFileSync('tests/scenarios/phase-3/manifest.json'));
 for(const item of manifest){
   const {name,night,ticks,expect}=item;
-  const args=['src/headless.mjs','--seed','42','--night',String(night),'--scenario',`tests/scenarios/phase-2/${name}.json`,'--inputs',`tests/scenarios/phase-2/${name}.inputs.json`,'--ticks',String(ticks),'--snapshot-every','60','--out',`${output}/${name}.jsonl`];
+  const args=['src/headless.mjs','--seed','42','--night',String(night),'--scenario',`tests/scenarios/phase-3/${name}.json`,'--inputs',`tests/scenarios/phase-3/${name}.inputs.json`,'--ticks',String(ticks),'--snapshot-every','60','--out',`${output}/${name}.jsonl`];
   const start=performance.now(),run=spawnSync(process.execPath,args,{encoding:'utf8',timeout:30000});if(run.status!==0)throw Error(`${name}: ${run.stderr||run.error}`);const elapsed=performance.now()-start;
   const first=readFileSync(`${output}/${name}.jsonl`),again=spawnSync(process.execPath,args,{encoding:'utf8',timeout:30000});if(again.status!==0||!first.equals(readFileSync(`${output}/${name}.jsonl`)))throw Error(`Not deterministic: ${name}`);
   const lines=first.toString().trim().split('\n').map(JSON.parse),end=lines.at(-1),snapshot=lines.filter(l=>l.type==='snapshot').at(-1),events=lines.filter(l=>l.type==='event');
@@ -15,7 +15,12 @@ for(const item of manifest){
   if(snapshot.tick!==end.ticks){const exactRun=spawnSync(process.execPath,exactArgs,{encoding:'utf8',timeout:30000});if(exactRun.status!==0)throw Error(exactRun.stderr);exact=readFileSync(`${output}/.exact.tmp`,'utf8').trim().split('\n').map(JSON.parse).filter(l=>l.type==='snapshot').at(-1);}
   if('state'in expect)assert.equal(end.state,expect.state,name);
   if('score'in expect)assert.equal(end.score,expect.score,name);
-  for(const k of ['carried','flames','grounded'])if(k in expect)assert.equal(exact.player[k],expect[k],`${name}.${k}`);
+  for(const k of ['carried','flames','grounded','capacity'])if(k in expect)assert.equal(exact.player[k],expect[k],`${name}.${k}`);
+  const lamp=exact.lanterns.find(l=>l.id===(expect.lamp_id??'L1'));
+  for(const k of ['fuel','ever_lit','relit_count'])if(k in expect)assert.equal(lamp[k],expect[k],`${name}.${k}`);
+  if('live_lamps'in expect)assert.equal(exact.lanterns.filter(l=>l.lit).length,expect.live_lamps,name);
+  if('shade_state'in expect)assert.equal(exact.shades[0].state,expect.shade_state,name);
+  if('reason'in expect)assert.equal(events.find(e=>e.name==='game_over')?.data.reason,expect.reason,name);
   if('pos'in expect)assert.deepEqual(exact.player.pos,expect.pos,name);
   if('y'in expect)assert.equal(exact.player.pos[1],expect.y,name);
   if('sim_tick'in expect)assert.equal(exact.sim_tick,expect.sim_tick,name);
@@ -28,6 +33,6 @@ for(const item of manifest){
 }
 if(existsSync(`${output}/.exact.tmp`))unlinkSync(`${output}/.exact.tmp`);
 // No claim about GPU performance: only measurements actually run here.
-const browserFPS=existsSync(`${output}/phase-2-fps.json`)?{source:'user-provided phase-2-fps.json',report:JSON.parse(readFileSync(`${output}/phase-2-fps.json`,'utf8')),scope:'One night2 run; UI/audio confirmed broadly by user. See manual-acceptance.md.'}:'unverified; use pause menu benchmark at1280x720';
+const browserFPS=existsSync(`${output}/phase-3-fps.json`)?{source:'user-provided phase-3-fps.json',report:JSON.parse(readFileSync(`${output}/phase-3-fps.json`,'utf8'))}:'unverified for Phase3; prior Phase2 measurement is historical only';
 writeFileSync(`${output}/verification.json`,JSON.stringify({generated_at:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0].model,tests_exit_code:tests.status,runs,browser_fps:browserFPS},null,2)+'\n');
 console.log(`Tests and ${runs.length} scenarios passed; deterministic output and headless time<30s. Evidence: ${output}`);

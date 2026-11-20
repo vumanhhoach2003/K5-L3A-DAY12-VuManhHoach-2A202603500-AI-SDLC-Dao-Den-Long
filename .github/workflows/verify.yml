@@ -14,5 +14,5 @@ jobs:
       - run: npm run verify
       - uses: actions/upload-artifact@v4
         with:
-          name: phase-2-proof
-          path: docs/proof/phase-2/
+          name: phase-3-proof
+          path: docs/proof/phase-3/

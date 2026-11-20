@@ -1,0 +1,33 @@
+{
+  "random_motes": false,
+  "random_shades": false,
+  "random_drifters": false,
+  "wind_enabled": false,
+  "lanterns": [
+    {
+      "id": "L1",
+      "lit": true,
+      "fuel": 100
+    },
+    {
+      "id": "L2",
+      "lit": true,
+      "fuel": 100
+    },
+    {
+      "id": "L3",
+      "lit": true,
+      "fuel": 100
+    },
+    {
+      "id": "L4",
+      "lit": true,
+      "fuel": 100
+    },
+    {
+      "id": "L5",
+      "lit": true,
+      "fuel": 100
+    }
+  ]
+}
