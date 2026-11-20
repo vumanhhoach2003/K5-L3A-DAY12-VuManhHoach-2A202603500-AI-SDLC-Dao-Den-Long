@@ -1,0 +1,84 @@
+{
+  "frames": [
+    {
+      "tick": 0,
+      "move": [
+        0,
+        1
+      ],
+      "interact": false
+    },
+    {
+      "tick": 249,
+      "move": [
+        0,
+        0
+      ],
+      "interact": true
+    },
+    {
+      "tick": 250,
+      "move": [
+        0.8106351872214939,
+        -0.5855515291059992
+      ],
+      "interact": false
+    },
+    {
+      "tick": 543,
+      "move": [
+        0,
+        0
+      ],
+      "interact": true
+    },
+    {
+      "tick": 544,
+      "move": [
+        -0.3080746656844352,
+        -0.9513621814868528
+      ],
+      "interact": false
+    },
+    {
+      "tick": 837,
+      "move": [
+        0,
+        0
+      ],
+      "interact": true
+    },
+    {
+      "tick": 838,
+      "move": [
+        -0.9999949115073009,
+        -0.0031901347159062833
+      ],
+      "interact": false
+    },
+    {
+      "tick": 1132,
+      "move": [
+        0,
+        0
+      ],
+      "interact": true
+    },
+    {
+      "tick": 1133,
+      "move": [
+        -0.30962694698499904,
+        0.9508581143897068
+      ],
+      "interact": false
+    },
+    {
+      "tick": 1426,
+      "move": [
+        0,
+        0
+      ],
+      "interact": true
+    }
+  ]
+}

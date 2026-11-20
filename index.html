@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101727"><title>Đảo Đèn Lồng · Đêm 1</title><link rel="stylesheet" href="style.css"></head>
+<body><canvas id="world" aria-label="Game 3D Đảo Đèn Lồng"></canvas>
+<header><div class="brand"><span class="eyebrow">MỘT CHUYẾN ĐI QUA ĐÊM</span><h1>Đảo Đèn Lồng</h1><span class="location">Đêm 1 <i></i> Đảo Bến</span></div><button id="pause" aria-label="Tạm dừng">Tạm dừng</button></header>
+<section class="stats" aria-label="Trạng thái game"><div><label>NGỌN LỬA</label><strong id="health">◆ ◆ ◆</strong></div><div><label>ĐOM ĐÓM</label><strong><span id="carry">0</span><small> / 12</small></strong></div><div><label>BÌNH MINH SAU</label><strong id="time">5:00</strong></div><div><label>ĐIỂM SỐ</label><strong id="score">0</strong></div></section>
+<aside class="quest"><span class="eyebrow">ÁNH SÁNG DẪN LỐI</span><h2>Thắp lại những vì sao.</h2><p>Gom đom đóm, mang ánh sáng về đèn.<br>Bóng Mực không dám đến gần đèn đã sáng.</p><div id="lanterns" class="lanterns"></div><span id="progress">0 / 5 đèn đã thắp</span></aside>
+<div id="notice" role="status">Một hòn đảo đang chờ ánh sáng của Mây.</div><div id="prompt"></div>
+<footer><div><kbd>W A S D</kbd> Di chuyển <kbd>Space</kbd> Nhảy <kbd>E</kbd> Nạp đèn <kbd>Q</kbd> Tỏa sáng <small>−2 đom đóm</small></div><div><kbd>← →</kbd> Xoay camera <kbd>P</kbd> Tạm dừng <kbd>R</kbd> Chơi lại</div></footer>
+<section id="overlay"><div class="intro"><span class="eyebrow">ĐÊM 1 · ĐẢO BẾN</span><div class="emblem">✦</div><h2>Mang ánh sáng<br>về nhà.</h2><p>Sương đen đã phủ xuống biển mây.<br>Cùng Mây gom đom đóm và thắp lại 5 Đèn Lồng Lớn trước bình minh.</p><button id="play">Bắt đầu hành trình</button><small>8 đom đóm thắp một đèn · 3 ngọn lửa giữ Mây an toàn</small></div></section>
+<div id="fatal" hidden></div><script type="module" src="src/view.mjs"></script></body></html>
