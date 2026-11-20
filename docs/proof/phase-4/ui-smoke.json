@@ -1,0 +1,80 @@
+{
+  "checks": [
+    {
+      "name": "main menu initialized",
+      "passed": true
+    },
+    {
+      "name": "all9 action controls",
+      "passed": true
+    },
+    {
+      "name": "normal UI font>=18px",
+      "passed": true
+    },
+    {
+      "name": "large text1.25",
+      "passed": true
+    },
+    {
+      "name": "reduced motion applied",
+      "passed": true
+    },
+    {
+      "name": "duplicate key reported",
+      "passed": true
+    },
+    {
+      "name": "new jump binding stored",
+      "passed": true
+    },
+    {
+      "name": "settings saved",
+      "passed": true
+    },
+    {
+      "name": "reset defaults works",
+      "passed": true
+    },
+    {
+      "name": "all visible settings/HUD text>=18px",
+      "passed": true
+    },
+    {
+      "name": "loss offers name save",
+      "passed": true
+    },
+    {
+      "name": "typingR does not restart game",
+      "passed": true
+    },
+    {
+      "name": "local score submitted",
+      "passed": true
+    },
+    {
+      "name": "server persisted total won-score",
+      "passed": true
+    },
+    {
+      "name": "menu ranking displays stored row",
+      "passed": true
+    },
+    {
+      "name": "spawn arrow visible",
+      "passed": true
+    },
+    {
+      "name": "all4 required visual cues",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "viewport": [
+    1262,
+    574
+  ],
+  "fixture": "isolated UI fixture, not a gameplay result; server scores stored only in temporary directory",
+  "generated_at": "2026-11-20T12:57:21.816Z",
+  "mode": "headless Chromium DOM integration; not a GPU benchmark"
+}

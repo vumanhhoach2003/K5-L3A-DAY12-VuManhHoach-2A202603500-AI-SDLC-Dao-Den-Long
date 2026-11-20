@@ -1,0 +1,15 @@
+import {createServer} from 'node:http';
+import {createReadStream,statSync,mkdirSync,writeFileSync,mkdtempSync} from 'node:fs';
+import {resolve,join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {spawn} from 'node:child_process';
+import {createHash} from 'node:crypto';
+const input=resolve(process.argv[2]),out=resolve(process.argv[3]??'docs/demo/manual');mkdirSync(out,{recursive:true});
+const size=statSync(input).size;let child,timer,finished=false;
+function finish(code){if(finished)return;finished=true;clearTimeout(timer);server.close();if(child?.pid)spawn('taskkill',['/PID',String(child.pid),'/T','/F'],{stdio:'ignore',windowsHide:true});process.exitCode=code;}
+const html=`<!doctype html><meta charset="utf-8"><video id="v" muted></video><script>
+(async()=>{const v=document.getElementById('v');v.src='/video';await new Promise((r,j)=>{v.onloadedmetadata=r;v.onerror=j;});const c=document.createElement('canvas');c.width=640;c.height=360;const ctx=c.getContext('2d'),samples=[];for(const ratio of [.1,.3,.5,.7,.9]){v.currentTime=v.duration*ratio;await new Promise(r=>v.onseeked=r);ctx.drawImage(v,0,0,640,360);samples.push({time_s:v.currentTime,png:c.toDataURL('image/png')});}await fetch('/result',{method:'POST',body:JSON.stringify({duration_s:v.duration,width:v.videoWidth,height:v.videoHeight,samples})});})().catch(e=>fetch('/error',{method:'POST',body:String(e)}));</script>`;
+const server=createServer(async(req,res)=>{if(req.url==='/video'){const match=req.headers.range?.match(/bytes=(\d+)-(\d*)/),start=match?Number(match[1]):0,end=match?.[2]?Number(match[2]):size-1;res.writeHead(match?206:200,{'Content-Type':'video/mp4','Accept-Ranges':'bytes','Content-Length':end-start+1,...(match?{'Content-Range':`bytes ${start}-${end}/${size}`}:{})});createReadStream(input,{start,end}).pipe(res);return;}
+if(req.url==='/result'){const chunks=[];for await(const c of req)chunks.push(c);const result=JSON.parse(Buffer.concat(chunks));for(const [i,s]of result.samples.entries()){writeFileSync(join(out,`frame-${i+1}.png`),Buffer.from(s.png.split(',')[1],'base64'));delete s.png;}const hash=createHash('sha256');for await(const c of createReadStream(input))hash.update(c);const report={...result,bytes:size,sha256:hash.digest('hex'),provenance:'User-provided manual gameplay recording; browser-decoded sample frames, not an automated gameplay fixture'};writeFileSync(join(out,'metadata.json'),JSON.stringify(report,null,2)+'\n');res.end('ok');console.log(JSON.stringify(report));setTimeout(()=>finish(0),200);return;}
+if(req.url==='/error'){res.end();finish(1);return;}res.setHeader('Content-Type','text/html');res.end(html);});
+server.listen(0,'127.0.0.1',()=>{const browser=process.env.LANTERN_BROWSER??join(process.env.LOCALAPPDATA,'BraveSoftware/Brave-Browser/Application/brave.exe');child=spawn(browser,['--headless=new',`--user-data-dir=${mkdtempSync(join(tmpdir(),'lantern-video-'))}`,'--no-first-run',`http://127.0.0.1:${server.address().port}/`],{stdio:'ignore',windowsHide:true});child.once('error',()=>finish(1));timer=setTimeout(()=>finish(1),60000);});

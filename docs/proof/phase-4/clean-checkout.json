@@ -1,0 +1,15 @@
+{
+  "source_commit": "ddae7c7f03949e7a9d545236794b1cde160d8cb5",
+  "source_tree": "aab1778671960530852be15969b210193e0ba20c",
+  "clean_directory": "C:\\Users\\Admin\\AppData\\Local\\Temp\\lantern-clean-NhncaJ\\checkout",
+  "generated_at": "2026-11-20T10:55:37.962Z",
+  "node": "v26.13.1",
+  "setup_commands": 3,
+  "steps": [
+    "npm ci: passed",
+    "npm run build: passed",
+    "npm start equivalent entry point: passed, all requested resources HTTP200",
+    "npm run verify: passed"
+  ],
+  "duration_s": 32.567784
+}

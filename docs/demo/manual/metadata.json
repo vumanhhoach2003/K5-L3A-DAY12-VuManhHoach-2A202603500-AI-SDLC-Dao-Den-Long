@@ -1,0 +1,25 @@
+{
+  "duration_s": 191.266667,
+  "width": 1280,
+  "height": 720,
+  "samples": [
+    {
+      "time_s": 19.126666
+    },
+    {
+      "time_s": 57.38
+    },
+    {
+      "time_s": 95.633333
+    },
+    {
+      "time_s": 133.886665
+    },
+    {
+      "time_s": 172.14
+    }
+  ],
+  "bytes": 144558712,
+  "sha256": "af51e4e180cd81db1d7e51a6f1049014d2ce8efe0e73e1923607c1261b30875a",
+  "provenance": "User-provided manual gameplay recording; browser-decoded sample frames, not an automated gameplay fixture"
+}

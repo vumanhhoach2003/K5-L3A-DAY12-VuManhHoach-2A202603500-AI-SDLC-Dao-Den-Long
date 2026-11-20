@@ -77,3 +77,4 @@ function frame(now){requestAnimationFrame(frame);const wallDelta=Math.max(0,(now
   if(benchmark){if(benchmark.start===0){if(panelMode==='playing')benchmark.start=now;}else{if(panelMode!=='playing')benchmark.interrupted=true;benchmark.frames++;benchmark.elapsed=(now-benchmark.start)/1000;if(benchmark.elapsed>=30)finishBenchmark();}}
 }
 initializePhase4({settings,applySettings,show,game:()=>game,campaign});show('menu');updateHUD();requestAnimationFrame(frame);
+if(new URLSearchParams(location.search).has('self-test'))fetch('/api/self-test/config').then(response=>response.ok?response.json():null).then(config=>{if(config?.enabled===true)import('./ui-smoke-view.mjs').then(module=>module.runUISelfTest({show,game:()=>game,campaign,settings,world}));});
