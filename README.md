@@ -2,6 +2,8 @@
 
 Game 3D góc nhìn thứ ba, Đêm 1 – Đảo Bến. Điều khiển Mây, gom đom đóm, thắp 5 Đèn Lồng Lớn, né Bóng Mực trước bình minh. Bản web chạy trên Windows/macOS/Linux; headless không cần GPU.
 
+**Cập nhật sau chơi thử:** người dùng xác nhận nhảy, xoay camera, thu thập/nạp đèn, tỏa sáng, địch, HUD, thắng/thua và chơi lại hoạt động. Đã sửa hướng trái/phải theo camera thực tế trên `main`; giữ nguyên tag `phase-1` cũ. Bản sửa đạt 21 test, cần người dùng tải lại để xác nhận hướng. Xem [báo cáo thủ công](docs/proof/manual-playtest.md).
+
 ## Cài đặt và chơi
 
 Cần Node.js **22 trở lên**, npm và trình duyệt hỗ trợ WebGL. Trong thư mục repo chạy 3 lệnh:
@@ -42,7 +44,7 @@ npm run verify
 node src/headless.mjs --seed 42 --night 1 --scenario tests/scenarios/full-route.json --inputs tests/scenarios/full-route.inputs.json --ticks 18000 --out result.jsonl --snapshot-every 10
 ```
 
-`npm test`: 20 test logic và CLI. `npm run verify`: chạy test, chạy 6 kịch bản mỗi kịch bản hai lần, so từng byte, lưu JSONL, SHA-256 và cấu hình máy vào [docs/proof/phase-1](docs/proof/phase-1/). Lệnh trả lỗi khi kiểm chứng không đạt. CI Ubuntu chạy khi push/PR; chưa xác nhận kết quả CI GitHub.
+`npm test`: 21 test logic, điều khiển và CLI (tag `phase-1` ban đầu có 20). `npm run verify`: chạy test, chạy 6 kịch bản mỗi kịch bản hai lần, so từng byte, lưu JSONL, SHA-256 và cấu hình máy vào [docs/proof/phase-1](docs/proof/phase-1/). Lệnh trả lỗi khi kiểm chứng không đạt. CI Ubuntu chạy khi push/PR; chưa xác nhận kết quả CI GitHub.
 
 [game.contract.json](game.contract.json) khai báo Contract v1.0 và tuning khớp runtime (được test). Snapshot tick 0, input giữ giá trị cũ, hành động cạnh lên, 60 tick/giây, JSONL kết thúc bằng `end`. `--night` chỉ nhận `1`. Bỏ `--scenario` để dùng màn thật; bỏ `--inputs` để đứng yên; mặc định snapshot mỗi 10 tick. JSON/dữ liệu scenario/inputs sai trả mã 2 và stderr; lỗi tham số hoặc I/O đầu ra trả mã 1.
 

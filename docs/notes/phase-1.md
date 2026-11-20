@@ -40,3 +40,7 @@ Build thành công; HTTP index, module renderer và Three.js trả 200. Chưa c�
 Logic và output tái lập không cần GPU; test biên giúp bám contract. Chưa khẳng định nghiệm thu trực quan vì UI bị chặn, cần kiểm tra chơi thật và review độc lập. Lần sau xác nhận công cụ trình duyệt từ đầu trước khi trang trí cảnh.
 
 Không có giờ bắt đầu lab/thông báo Coach nên không xác nhận đúng hạn. Không sửa thời gian commit. Video và Release cuối ở Phase 4.
+
+## Phản hồi sau chơi thử và sửa điều khiển
+
+Người dùng đã tự chơi và xác nhận nhảy/camera, các cơ chế thu thập/nạp/pulse/địch, HUD, thắng/thua và chơi lại hoạt động. Trái/phải bị ngược; xem `docs/proof/manual-playtest.md`. Sửa đầu vào UI theo trục camera thực tế, kiểm tra bằng phép chiếu camera Three.js ở năm góc thay vì chỉ suy luận dấu trục. 21 test và build đạt; sáu output headless vẫn tất định. Agent chưa quan sát trực quan bản sửa, cần người dùng tải lại xác nhận. Không di chuyển tag phase-1; commit sửa sau tag để giữ nguyên lịch sử bàn giao.

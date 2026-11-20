@@ -1,28 +1,29 @@
-✔ contract tuning is exactly the runtime tuning (6.5207ms)
-✔ tick zero is pristine, exactly 60 steps move six meters, time decrements (4.4715ms)
-✔ camera yaw rotates movement; diagonal movement normalized (2.6409ms)
-✔ pickup includes radius boundary, ignores Y, limits capacity and scores each mote (0.7299ms)
-✔ partial deposit, held interaction, subsequent rising edge and lighting (1.7762ms)
-✔ scenario overrides preserve five lamps, have no events or score (1.01ms)
-✔ pulse boundary, exact cost, push distance, stun, held input, cooldown (1.8078ms)
-✔ insufficient light cannot pulse (0.377ms)
-✔ shade hits, floor drop, invulnerability and eventual no_flames defeat (2.4401ms)
-✔ lit lamp excludes shades and protects player at sanctuary boundary (2.3325ms)
-✔ unlit lamp is not a sanctuary (0.6855ms)
-✔ fifth lamp wins with score bonus and simulation stops (0.6572ms)
-✔ dawn defeat occurs on exact final tick (1.0167ms)
-✔ jump lands, holding jump cannot retrigger; no falling penalty (1.5978ms)
-✔ seed determines reproducible motes and shade spawn IDs (4.0075ms)
-✔ full route collects forty motes and lights all five lamps through ordinary inputs (21.9207ms)
-✔ stun expires, shade spawns emit once, initial no flames loses (6.1083ms)
-✔ CLI snapshots/event ticks, sticky inputs, final end, exact determinism (344.2472ms)
-✔ CLI invalid scenario or inputs returns 2, stderr describes error (1249.9394ms)
-✔ CLI zero steps, short terminal run, output I/O and bad arguments (1005.6467ms)
-ℹ tests 20
+✔ A/D move left/right on the rendered screen at every camera heading (7.4562ms)
+✔ contract tuning is exactly the runtime tuning (3.3834ms)
+✔ tick zero is pristine, exactly 60 steps move six meters, time decrements (2.9113ms)
+✔ camera yaw rotates movement; diagonal movement normalized (1.279ms)
+✔ pickup includes radius boundary, ignores Y, limits capacity and scores each mote (0.7712ms)
+✔ partial deposit, held interaction, subsequent rising edge and lighting (1.8178ms)
+✔ scenario overrides preserve five lamps, have no events or score (0.4869ms)
+✔ pulse boundary, exact cost, push distance, stun, held input, cooldown (0.5631ms)
+✔ insufficient light cannot pulse (0.8949ms)
+✔ shade hits, floor drop, invulnerability and eventual no_flames defeat (1.8013ms)
+✔ lit lamp excludes shades and protects player at sanctuary boundary (0.9981ms)
+✔ unlit lamp is not a sanctuary (0.2557ms)
+✔ fifth lamp wins with score bonus and simulation stops (0.2477ms)
+✔ dawn defeat occurs on exact final tick (0.2474ms)
+✔ jump lands, holding jump cannot retrigger; no falling penalty (0.4811ms)
+✔ seed determines reproducible motes and shade spawn IDs (2.7128ms)
+✔ full route collects forty motes and lights all five lamps through ordinary inputs (17.4215ms)
+✔ stun expires, shade spawns emit once, initial no flames loses (4.5391ms)
+✔ CLI snapshots/event ticks, sticky inputs, final end, exact determinism (209.5209ms)
+✔ CLI invalid scenario or inputs returns 2, stderr describes error (752.4209ms)
+✔ CLI zero steps, short terminal run, output I/O and bad arguments (498.0751ms)
+ℹ tests 21
 ℹ suites 0
-ℹ pass 20
+ℹ pass 21
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 3001.7071
+ℹ duration_ms 1695.6844
