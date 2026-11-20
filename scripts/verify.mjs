@@ -28,5 +28,6 @@ for(const item of manifest){
 }
 if(existsSync(`${output}/.exact.tmp`))unlinkSync(`${output}/.exact.tmp`);
 // No claim about GPU performance: only measurements actually run here.
-writeFileSync(`${output}/verification.json`,JSON.stringify({generated_at:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0].model,tests_exit_code:tests.status,runs,browser_fps:'unverified; use pause menu benchmark at1280x720'},null,2)+'\n');
+const browserFPS=existsSync(`${output}/phase-2-fps.json`)?{source:'user-provided phase-2-fps.json',report:JSON.parse(readFileSync(`${output}/phase-2-fps.json`,'utf8')),scope:'One night2 run; UI/audio confirmed broadly by user. See manual-acceptance.md.'}:'unverified; use pause menu benchmark at1280x720';
+writeFileSync(`${output}/verification.json`,JSON.stringify({generated_at:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0].model,tests_exit_code:tests.status,runs,browser_fps:browserFPS},null,2)+'\n');
 console.log(`Tests and ${runs.length} scenarios passed; deterministic output and headless time<30s. Evidence: ${output}`);

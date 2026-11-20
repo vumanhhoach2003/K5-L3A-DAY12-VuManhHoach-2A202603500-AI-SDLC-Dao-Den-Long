@@ -2,6 +2,8 @@
 
 Nguồn: [Ticket-02](ticket_02_phase_2.md), Contract v1.1. Bằng chứng tự động nằm trong `docs/proof/phase-2`. “Logic đạt” không có nghĩa giao diện đã được nhìn thấy hoặc âm thanh đã được nghe thử.
 
+**Cập nhật sau bàn giao:** người dùng xác nhận giao diện ổn và có âm thanh; file `phase-2-fps.json` đo Đêm 2 đạt 143,32 FPS tại 1280×720 trong 30,003 giây. Đây là xác nhận tổng quát; những mục kiểm tra chi tiết dưới đây chưa được người dùng xác nhận riêng. Xem `docs/proof/phase-2/manual-acceptance.md`.
+
 | Mục | Tiêu chí kiểm tra | Bằng chứng và kết quả |
 | --- | --- | --- |
 | Số liệu chuẩn | Tuning khớp contract; đi 6 m/60 tick; gravity 20; carry 10; cost 10; đúng các biên bán kính | `game.test`, `movement-regression`, `pulse-3d`: đạt |
@@ -19,7 +21,7 @@ Nguồn: [Ticket-02](ticket_02_phase_2.md), Contract v1.1. Bằng chứng tự �
 | Spawn và thứ tự tick | Sinh ở bước 10, tương tác từ tick sau; cướp trước hit, tối đa một hit/tick | `mote-spawn`, `spawn-night2`, `game.test`: đạt |
 | Contract v1.1 | CLI ba Đêm, snapshot mới, lỗi dữ liệu mã 2, pause/cạnh lên/seed tất định | Test CLI và 23 scenario so byte: đạt |
 | Headless hiệu năng | Chạy đến 21.600 tick trong ≤30 giây | `duration-night1/2/3`, số đo thật trong `verification.json`: đạt |
-| Render hiệu năng | FPS trung bình ≥30 ở 1280×720 trong 30 giây chơi | Có công cụ xuất `phase-2-fps.json`; **chưa có số đo** |
+| Render hiệu năng | FPS trung bình ≥30 ở 1280×720 trong 30 giây chơi | File người dùng: **143,32 FPS**, Đêm 2, 4300 frame/30,003 s, visible=true; đạt ngưỡng ở lượt đo này; chưa đo riêng Đêm 1/3 |
 
 Tính năng trình bày không có tương đương JSONL: các test headless bảo vệ trạng thái nền; checklist dưới đây dùng để nghiệm thu UI. Không nhận test dữ liệu là bằng chứng đã nhìn hoặc nghe đúng.
 

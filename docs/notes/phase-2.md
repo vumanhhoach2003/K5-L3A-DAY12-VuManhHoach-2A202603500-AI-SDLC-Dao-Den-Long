@@ -50,3 +50,9 @@ OpenAI Codex thực hiện; áp dụng quy trình Sites và Computer Use đã đ
 Không có usage token chính xác hoặc chi phí billing. Ước lượng thô 30.000–60.000 token cho Phase 2, không phải số đo. Tiết kiệm bằng simulation dùng chung, giữ Three.js hiện tại, không cài engine khác, test tập trung, fixtures nhỏ và không tạo tài nguyên ảnh.
 
 Logic đã kiểm chứng; DoD chưa xác nhận đầy đủ khi FPS/UI/âm thanh còn thiếu số đo và chơi thử. Cần xác nhận công cụ UI từ đầu ở lần sau. Không biết mốc giờ Coach nên không khẳng định đúng hạn. Giữ tag phase-1, bàn giao phase-2 riêng; chưa tạo Release v1.0.0/video của Phase 4.
+
+## Bổ sung từ người dùng sau bàn giao
+
+Người dùng báo “Giao dien oke, am thanh có, FPS trong file” và cung cấp `phase-2-fps.json`. Đã lưu nguyên gốc tại `docs/proof/phase-2/phase-2-fps.json`, kiểm tra hash bản sao trùng nguồn và tính lại 4300/30,0026 = 143,3209 FPS. Độ phân giải 1280×720, pixel ratio 1, Đêm 2, visible_entire_run=true: đạt ngưỡng FPS trong lượt đo này. Không có trường gameplay_entire_run nên không tự bổ sung vào bằng chứng. Chưa có số đo riêng Đêm 1/3 hoặc xác nhận từng hiệu ứng và mục UI.
+
+Đây là bổ sung bằng chứng sau tag phase-2, không phải thay đổi game. Giữ nguyên tag đã phát hành; tài liệu trên main phản ánh xác nhận mới. Ghi nhận trước đây về thiếu mọi bằng chứng UI/FPS nay được thay thế bởi phản hồi và file của người dùng, trong phạm vi nêu trên.

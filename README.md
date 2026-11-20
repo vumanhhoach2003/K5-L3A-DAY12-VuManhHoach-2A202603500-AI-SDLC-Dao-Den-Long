@@ -60,7 +60,9 @@ Chạy đủ 18.000 / 19.800 / 21.600 tick đã đạt ngưỡng headless **<30 
 
 Để đo render thực tế: đang chơi nhấn **P → Đo FPS 1280 × 720**. Game dùng framebuffer 1280×720, pixel ratio1, đo 30 giây rồi tải `phase-2-fps.json`. Giữ cửa sổ phía trước và tiếp tục chơi; lượt có ẩn cửa sổ, tạm dừng hoặc kết thúc màn bị đánh dấu không hợp lệ. Cần FPS trung bình ≥30. Chạy lại trên từng Đêm để kiểm tra cảnh nặng hơn.
 
-**Chưa nghiệm thu trực quan/âm thanh và chưa có số FPS thực tế Phase 2.** Browser access host không khả dụng; công cụ Windows chặn điều khiển do không xác minh chắc URL. Đã kiểm tra build, cú pháp và HTTP, chưa tuyên bố đạt yêu cầu GPU. Phản hồi chơi thử trước đây chỉ áp dụng Phase 1. Chưa xác nhận test ẩn hoặc CI Linux mới; không suy đoán kết quả.
+**Đã có xác nhận chơi thử Phase 2 từ người dùng:** giao diện ổn, có âm thanh. [File FPS nguyên gốc](docs/proof/phase-2/phase-2-fps.json) ghi **143,32 FPS** tại **1280×720**, pixel ratio 1, trong **30,003 giây ở Đêm 2**, đạt ngưỡng ≥30 FPS. Đã kiểm tra lại phép tính 4300 frame/thời lượng và giữ nguyên file. Xem [ghi nhận nghiệm thu](docs/proof/phase-2/manual-acceptance.md).
+
+Giới hạn: đây là người dùng xác nhận, không phải agent trực tiếp quan sát. File không có trường `gameplay_entire_run`, không có cấu hình GPU/CPU, chưa đo riêng Đêm 1/3. Xác nhận “có âm thanh” không chứng minh từng hiệu ứng riêng; không suy rộng thành đã kiểm tra chi tiết mọi mục UI. Chưa xác nhận test ẩn hoặc CI Linux mới.
 
 ## Sáng tạo của tôi
 
