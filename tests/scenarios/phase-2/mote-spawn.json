@@ -1,0 +1,7 @@
+{
+  "random_motes": true,
+  "random_shades": false,
+  "random_drifters": false,
+  "wind_enabled": false,
+  "motes": []
+}

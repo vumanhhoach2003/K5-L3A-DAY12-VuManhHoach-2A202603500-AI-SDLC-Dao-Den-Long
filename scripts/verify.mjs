@@ -1,6 +1,32 @@
-import {spawnSync} from 'node:child_process';import {mkdirSync,writeFileSync,readFileSync} from 'node:fs';import {createHash} from 'node:crypto';import {cpus,platform,arch} from 'node:os';
-mkdirSync('docs/proof/phase-1',{recursive:true});
-const tests=spawnSync(process.execPath,['--test'],{encoding:'utf8'});writeFileSync('docs/proof/phase-1/tests.txt',tests.stdout+tests.stderr);if(tests.status!==0){console.error(tests.stdout,tests.stderr);process.exit(tests.status??1);}
-const output='docs/proof/phase-1';const runs=[];
-for(const name of ['movement','victory','defeat','pulse','survival','full-route']){const args=['src/headless.mjs','--seed','42','--night','1','--scenario',`tests/scenarios/${name}.json`,'--ticks',['survival','full-route'].includes(name)?'18000':'600','--out',`${output}/${name}.jsonl`];if(['movement','victory','pulse','full-route'].includes(name))args.push('--inputs',`tests/scenarios/${name}.inputs.json`);const start=performance.now();const result=spawnSync(process.execPath,args,{encoding:'utf8'});if(result.status!==0)throw Error(result.stderr);const first=readFileSync(`${output}/${name}.jsonl`);const second=spawnSync(process.execPath,args,{encoding:'utf8'});if(second.status!==0||!first.equals(readFileSync(`${output}/${name}.jsonl`)))throw Error('nondeterministic '+name);runs.push({scenario:name,repeat_byte_identical:true,sha256:createHash('sha256').update(first).digest('hex'),two_runs_ms:Math.round(performance.now()-start),end:JSON.parse(first.toString().trim().split('\n').at(-1))});}
-writeFileSync(`${output}/verification.json`,JSON.stringify({generated_at:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0].model,tests_exit_code:tests.status,runs},null,2)+'\n');console.log('All tests passed; six scenarios reproduced byte-for-byte. Evidence: docs/proof/phase-1');
+import {spawnSync} from 'node:child_process';import {mkdirSync,writeFileSync,readFileSync,unlinkSync,existsSync} from 'node:fs';import {createHash} from 'node:crypto';import {cpus,platform,arch} from 'node:os';import assert from 'node:assert/strict';
+const output='docs/proof/phase-2';mkdirSync(output,{recursive:true});
+const tests=spawnSync(process.execPath,['--test'],{encoding:'utf8'});writeFileSync(`${output}/tests.txt`,tests.stdout+tests.stderr);if(tests.status!==0){console.error(tests.stdout,tests.stderr);process.exit(tests.status??1);}
+const runs=[],manifest=JSON.parse(readFileSync('tests/scenarios/phase-2/manifest.json'));
+for(const item of manifest){
+  const {name,night,ticks,expect}=item;
+  const args=['src/headless.mjs','--seed','42','--night',String(night),'--scenario',`tests/scenarios/phase-2/${name}.json`,'--inputs',`tests/scenarios/phase-2/${name}.inputs.json`,'--ticks',String(ticks),'--snapshot-every','60','--out',`${output}/${name}.jsonl`];
+  const start=performance.now(),run=spawnSync(process.execPath,args,{encoding:'utf8',timeout:30000});if(run.status!==0)throw Error(`${name}: ${run.stderr||run.error}`);const elapsed=performance.now()-start;
+  const first=readFileSync(`${output}/${name}.jsonl`),again=spawnSync(process.execPath,args,{encoding:'utf8',timeout:30000});if(again.status!==0||!first.equals(readFileSync(`${output}/${name}.jsonl`)))throw Error(`Not deterministic: ${name}`);
+  const lines=first.toString().trim().split('\n').map(JSON.parse),end=lines.at(-1),snapshot=lines.filter(l=>l.type==='snapshot').at(-1),events=lines.filter(l=>l.type==='event');
+  // For short scenarios whose last step is not on a snapshot boundary, replay
+  // at interval1 for exact assertions; the saved evidence remains compact.
+  const exactArgs=[...args];exactArgs[exactArgs.indexOf('--snapshot-every')+1]='1';exactArgs[exactArgs.indexOf('--out')+1]=`${output}/.exact.tmp`;
+  let exact=snapshot;
+  if(snapshot.tick!==end.ticks){const exactRun=spawnSync(process.execPath,exactArgs,{encoding:'utf8',timeout:30000});if(exactRun.status!==0)throw Error(exactRun.stderr);exact=readFileSync(`${output}/.exact.tmp`,'utf8').trim().split('\n').map(JSON.parse).filter(l=>l.type==='snapshot').at(-1);}
+  if('state'in expect)assert.equal(end.state,expect.state,name);
+  if('score'in expect)assert.equal(end.score,expect.score,name);
+  for(const k of ['carried','flames','grounded'])if(k in expect)assert.equal(exact.player[k],expect[k],`${name}.${k}`);
+  if('pos'in expect)assert.deepEqual(exact.player.pos,expect.pos,name);
+  if('y'in expect)assert.equal(exact.player.pos[1],expect.y,name);
+  if('sim_tick'in expect)assert.equal(exact.sim_tick,expect.sim_tick,name);
+  if('motes'in expect)assert.equal(exact.motes_active,expect.motes,name);
+  if('picked'in expect)assert.equal(events.filter(e=>e.name==='mote_picked').length,expect.picked,name);
+  if('lit'in expect)assert.equal(events.filter(e=>e.name==='lantern_lit').length,expect.lit,name);
+  for(const e of expect.events??[])assert.ok(events.some(event=>event.name===e),`${name} missing ${e}`);
+  assert.ok(elapsed<30000,`${name} exceeds30s`);
+  runs.push({scenario:name,night,repeat_byte_identical:true,assertions_passed:true,sha256:createHash('sha256').update(first).digest('hex'),headless_ms:Math.round(elapsed),end});
+}
+if(existsSync(`${output}/.exact.tmp`))unlinkSync(`${output}/.exact.tmp`);
+// No claim about GPU performance: only measurements actually run here.
+writeFileSync(`${output}/verification.json`,JSON.stringify({generated_at:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0].model,tests_exit_code:tests.status,runs,browser_fps:'unverified; use pause menu benchmark at1280x720'},null,2)+'\n');
+console.log(`Tests and ${runs.length} scenarios passed; deterministic output and headless time<30s. Evidence: ${output}`);

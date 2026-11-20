@@ -1,0 +1,257 @@
+[
+  {
+    "name": "movement-regression",
+    "night": 1,
+    "ticks": 60,
+    "expect": {
+      "pos": [
+        0,
+        0,
+        6
+      ],
+      "carried": 1
+    }
+  },
+  {
+    "name": "dash-air",
+    "night": 1,
+    "ticks": 12,
+    "expect": {
+      "pos": [
+        2.8,
+        2,
+        0
+      ],
+      "events": [
+        "dash"
+      ]
+    }
+  },
+  {
+    "name": "pulse-3d",
+    "night": 1,
+    "ticks": 20,
+    "expect": {
+      "events": [
+        "pulse"
+      ],
+      "carried": 3,
+      "score": 5
+    }
+  },
+  {
+    "name": "hit-drops",
+    "night": 1,
+    "ticks": 1,
+    "expect": {
+      "events": [
+        "player_hit"
+      ],
+      "carried": 5,
+      "flames": 2,
+      "motes": 4
+    }
+  },
+  {
+    "name": "fall-respawn",
+    "night": 1,
+    "ticks": 61,
+    "expect": {
+      "events": [
+        "player_hit"
+      ],
+      "flames": 2,
+      "pos": [
+        0,
+        0,
+        0
+      ],
+      "carried": 0
+    }
+  },
+  {
+    "name": "pause",
+    "night": 1,
+    "ticks": 120,
+    "expect": {
+      "events": [
+        "paused",
+        "resumed"
+      ],
+      "sim_tick": 60
+    }
+  },
+  {
+    "name": "charm",
+    "night": 2,
+    "ticks": 15,
+    "expect": {
+      "events": [
+        "charm_picked",
+        "dash"
+      ]
+    }
+  },
+  {
+    "name": "drifter-steal",
+    "night": 2,
+    "ticks": 2,
+    "expect": {
+      "events": [
+        "drifter_steal"
+      ],
+      "carried": 5,
+      "flames": 3
+    }
+  },
+  {
+    "name": "drifter-drop",
+    "night": 2,
+    "ticks": 120,
+    "expect": {
+      "events": [
+        "drifter_drop",
+        "pulse"
+      ],
+      "motes": 3
+    }
+  },
+  {
+    "name": "pad-night2",
+    "night": 2,
+    "ticks": 100,
+    "expect": {
+      "grounded": true
+    }
+  },
+  {
+    "name": "bridge",
+    "night": 2,
+    "ticks": 100,
+    "expect": {
+      "pos": [
+        36,
+        0,
+        0
+      ],
+      "flames": 3
+    }
+  },
+  {
+    "name": "pad-night3",
+    "night": 3,
+    "ticks": 56,
+    "expect": {
+      "grounded": true,
+      "y": 6
+    }
+  },
+  {
+    "name": "ramp-night3",
+    "night": 3,
+    "ticks": 60,
+    "expect": {
+      "y": 3
+    }
+  },
+  {
+    "name": "wind-night3",
+    "night": 3,
+    "ticks": 2100,
+    "expect": {}
+  },
+  {
+    "name": "spawn-night2",
+    "night": 2,
+    "ticks": 2400,
+    "expect": {
+      "events": [
+        "shade_spawned"
+      ]
+    }
+  },
+  {
+    "name": "mote-spawn",
+    "night": 1,
+    "ticks": 480,
+    "expect": {
+      "motes": 2
+    }
+  },
+  {
+    "name": "win-night1",
+    "night": 1,
+    "ticks": 60,
+    "expect": {
+      "state": "won",
+      "events": [
+        "deposit",
+        "lantern_lit",
+        "game_over"
+      ]
+    }
+  },
+  {
+    "name": "duration-night1",
+    "night": 1,
+    "ticks": 21600,
+    "expect": {
+      "state": "lost",
+      "sim_tick": 18000
+    }
+  },
+  {
+    "name": "win-night2",
+    "night": 2,
+    "ticks": 60,
+    "expect": {
+      "state": "won",
+      "events": [
+        "deposit",
+        "lantern_lit",
+        "game_over"
+      ]
+    }
+  },
+  {
+    "name": "duration-night2",
+    "night": 2,
+    "ticks": 21600,
+    "expect": {
+      "state": "lost",
+      "sim_tick": 19800
+    }
+  },
+  {
+    "name": "win-night3",
+    "night": 3,
+    "ticks": 60,
+    "expect": {
+      "state": "won",
+      "events": [
+        "deposit",
+        "lantern_lit",
+        "game_over"
+      ]
+    }
+  },
+  {
+    "name": "duration-night3",
+    "night": 3,
+    "ticks": 21600,
+    "expect": {
+      "state": "lost",
+      "sim_tick": 21600
+    }
+  },
+  {
+    "name": "full-route",
+    "night": 1,
+    "ticks": 5000,
+    "expect": {
+      "state": "won",
+      "picked": 50,
+      "lit": 5
+    }
+  }
+]
