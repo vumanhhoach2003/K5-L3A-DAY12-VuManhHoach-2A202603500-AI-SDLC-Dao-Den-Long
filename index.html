@@ -1,10 +1,11 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0E1430"><title>Đảo Đèn Lồng · Đèn cạn dầu</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="phase3.css"></head>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0E1430"><title>Đảo Đèn Lồng · Bình minh v1.0.0</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="phase3.css"><link rel="stylesheet" href="phase4.css"></head>
 <body><canvas id="world" aria-label="Thế giới 3D Đảo Đèn Lồng"></canvas>
 <header><div class="brand"><span class="eyebrow">MỘT CHUYẾN ĐI QUA ĐÊM</span><h1>Đảo Đèn Lồng</h1><span id="location">Đêm 1 · Đảo Bến</span></div><button id="pause-button">Tạm dừng</button></header>
 <section id="hud" aria-label="Thông tin trò chơi"><div class="health"><label>NGỌN LỬA</label><strong id="health">◆ ◆ ◆</strong><span id="charm"></span></div><div class="clock"><label>BÌNH MINH SAU</label><strong id="time">05:00</strong></div><div class="progress"><label>ĐÈN ĐÃ THẮP</label><strong id="progress">0 / 5</strong><span id="score">0 điểm</span></div></section>
 <aside class="quest"><span class="eyebrow">ÁNH SÁNG DẪN LỐI</span><h2 id="quest-title">Thắp lại những vì sao.</h2><p id="quest-description">Gom đom đóm, mang ánh sáng về đèn.<br>Đèn đã sáng sẽ che chở cho Mây.</p><div id="lamps"></div><div id="wind-notice" role="status"></div></aside>
 <div id="notice" role="status">Ba hòn đảo. Một người giữ đèn.</div><div id="prompt"></div><div id="guide" aria-label="Hướng tới đèn chưa sáng"><span>▲</span><small id="guide-distance"></small></div>
 <div class="bag"><label>ĐOM ĐÓM <b id="carry">0 / 10</b></label><div id="slots"></div></div><div class="cooldowns"><div><kbd>Shift</kbd><span>Lướt</span><b id="dash-cd">Sẵn sàng</b></div><div><kbd>Q</kbd><span>Tỏa sáng · 3</span><b id="pulse-cd">Sẵn sàng</b></div></div>
-<footer><span><kbd>W A S D</kbd> Di chuyển <kbd>Space</kbd> Nhảy <kbd>E</kbd> Nạp đèn</span><span><kbd>← →</kbd> / Kéo chuột: camera <kbd>P / Esc</kbd> Tạm dừng</span><span id="fps-label"></span></footer>
+<div id="subtitles" role="status" aria-live="polite"></div><div id="spawn-arrow" hidden aria-label="Hướng Bóng Mực vừa xuất hiện"><span>▲</span><small></small></div>
+<footer><span id="control-hints"></span><span id="camera-hints"></span><span id="fps-label"></span></footer>
 <section id="overlay" aria-label="Menu trò chơi"><div class="panel" id="panel"></div></section><div id="fatal" hidden role="alert"></div>
 <script type="module" src="src/view.mjs"></script></body></html>

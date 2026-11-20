@@ -1,7 +1,7 @@
 import {spawnSync} from 'node:child_process';import {mkdirSync,writeFileSync,readFileSync,unlinkSync,existsSync} from 'node:fs';import {createHash} from 'node:crypto';import {cpus,platform,arch} from 'node:os';import assert from 'node:assert/strict';
-const output='docs/proof/phase-3';mkdirSync(output,{recursive:true});
+const output='docs/proof/phase-4';mkdirSync(output,{recursive:true});
 const tests=spawnSync(process.execPath,['--test'],{encoding:'utf8'});writeFileSync(`${output}/tests.txt`,tests.stdout+tests.stderr);if(tests.status!==0){console.error(tests.stdout,tests.stderr);process.exit(tests.status??1);}
-const runs=[],manifest=JSON.parse(readFileSync('tests/scenarios/phase-3/manifest.json'));
+const runs=[],manifest=JSON.parse(readFileSync('tests/scenarios/phase-3/manifest.json')),baseline=JSON.parse(readFileSync('docs/proof/phase-3/verification.json')).runs;
 for(const item of manifest){
   const {name,night,ticks,expect}=item;
   const args=['src/headless.mjs','--seed','42','--night',String(night),'--scenario',`tests/scenarios/phase-3/${name}.json`,'--inputs',`tests/scenarios/phase-3/${name}.inputs.json`,'--ticks',String(ticks),'--snapshot-every','60','--out',`${output}/${name}.jsonl`];
@@ -29,10 +29,13 @@ for(const item of manifest){
   if('lit'in expect)assert.equal(events.filter(e=>e.name==='lantern_lit').length,expect.lit,name);
   for(const e of expect.events??[])assert.ok(events.some(event=>event.name===e),`${name} missing ${e}`);
   assert.ok(elapsed<30000,`${name} exceeds30s`);
-  runs.push({scenario:name,night,repeat_byte_identical:true,assertions_passed:true,sha256:createHash('sha256').update(first).digest('hex'),headless_ms:Math.round(elapsed),end});
+  const hash=createHash('sha256').update(first).digest('hex');assert.equal(hash,baseline.find(r=>r.scenario===name)?.sha256,`${name}: Phase3 regression output changed`);
+  runs.push({scenario:name,night,repeat_byte_identical:true,phase3_hash_unchanged:true,assertions_passed:true,sha256:hash,headless_ms:Math.round(elapsed),end});
 }
 if(existsSync(`${output}/.exact.tmp`))unlinkSync(`${output}/.exact.tmp`);
 // No claim about GPU performance: only measurements actually run here.
-const browserFPS=existsSync(`${output}/phase-3-fps.json`)?{source:'user-provided phase-3-fps.json',report:JSON.parse(readFileSync(`${output}/phase-3-fps.json`,'utf8'))}:'unverified for Phase3; prior Phase2 measurement is historical only';
-writeFileSync(`${output}/verification.json`,JSON.stringify({generated_at:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0].model,tests_exit_code:tests.status,runs,browser_fps:browserFPS},null,2)+'\n');
+const bench=JSON.parse(readFileSync('bench.json')),soak=JSON.parse(readFileSync('soak.json'));
+assert.equal(bench.contract_version,'1.3');assert.ok(bench.avg_fps>=60&&bench.p1_low_fps>=30&&bench.load_ms<=10000,'Benchmark threshold failed');assert.deepEqual(bench.framebuffer,[1280,720]);assert.equal(bench.scene.shades,200);assert.equal(bench.scene.motes,100);assert.equal(soak.nights,10);assert.equal(soak.crashes,0);assert.equal(soak.results.length,10);assert.ok(soak.mem_end_mb<=1.2*soak.mem_start_mb,'Soak RSS growth exceeds20%');
+const count=label=>Number([...tests.stdout.matchAll(new RegExp('\\b'+label+' (\\d+)','g'))].at(-1)?.[1]??0);
+writeFileSync(`${output}/verification.json`,JSON.stringify({contract_version:'1.3',generated_at:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0].model,tests_exit_code:tests.status,tests:{total:count('tests'),passed:count('pass'),failed:count('fail')},runs,bench,soak},null,2)+'\n');
 console.log(`Tests and ${runs.length} scenarios passed; deterministic output and headless time<30s. Evidence: ${output}`);

@@ -1,0 +1,52 @@
+{
+  "nights": 10,
+  "crashes": 0,
+  "results": [
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost"
+  ],
+  "mem_start_mb": 44.08203125,
+  "mem_end_mb": 47.3359375,
+  "duration_s": 14.0483516,
+  "seeds": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "sim_ticks": [
+    1435,
+    2254,
+    10264,
+    2676,
+    731,
+    4363,
+    1520,
+    4458,
+    6045,
+    1349
+  ],
+  "gc_available": true,
+  "runtime_flags": [
+    "--jitless",
+    "--expose-gc",
+    "--max-semi-space-size=1",
+    "--max-old-space-size=64"
+  ],
+  "reset_definition": "previous Game released, next fresh Game loaded; garbage collection requested after reset",
+  "errors": []
+}

@@ -2,6 +2,7 @@ import * as THREE from '../vendor/three.module.js';
 import {PALETTE as c} from './palette.mjs';
 import {accessibilityPalette,lanternAppearance} from './accessibility.mjs';
 import {protects} from './lanterns.mjs';
+import {ActorBatches} from './actors.mjs';
 const material=(color,options={})=>new THREE.MeshStandardMaterial({color,roughness:.9,...options});
 export class WorldView {
   constructor(canvas){
@@ -26,9 +27,10 @@ export class WorldView {
     this.legs=[-.18,.18].map(x=>this.mesh(new THREE.CylinderGeometry(.1,.1,.55,6),material(0x273849),p,[x,.28,0]));
     this.mesh(new THREE.CylinderGeometry(.018,.018,.5,5),wood,p,[.65,1.45,0]);this.mesh(new THREE.SphereGeometry(.19,10,8),material(c.lantern,{emissive:c.core,emissiveIntensity:1}),p,[.65,1.1,0]);const light=new THREE.PointLight(c.lantern,16,12);light.position.set(.6,1.3,0);p.add(light);return p;
   }
-  clearGroup(group){group.traverse(o=>{o.geometry?.dispose();if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material])if(m!==this.gold&&m!==this.shadeMaterial)m.dispose();}});group.clear();}
+  clearGroup(group){group.traverse(o=>{if(o.isInstancedMesh)o.dispose();o.geometry?.dispose();if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material])if(m!==this.gold&&m!==this.shadeMaterial)m.dispose();}});group.clear();}
   setNight(game){
     this.clearGroup(this.root);for(const map of [this.motes,this.shades,this.drifters,this.charms])map.clear();this.lamps=[];this.padViews=[];this.upperLayers=[];
+    this.actors=new ActorBatches(this.root,this.gold,this.shadeMaterial);
     const grass=material(c.grass),stone=material(0x293e4b),wood=material(c.wood);
     for(const [cx,cz,r]of game.map.islands){this.mesh(new THREE.CylinderGeometry(r,r*.86,5,64),stone,this.root,[cx,-2.6,cz]);this.mesh(new THREE.CylinderGeometry(r,r,.2,64),grass,this.root,[cx,-.1,cz]);
       for(let i=0;i<22;i++){const a=i*Math.PI*2/22,radius=r-2,x=cx+Math.cos(a)*radius,z=cz+Math.sin(a)*radius;if(game.night===2&&Math.abs(z)<4)continue;this.mesh(new THREE.CylinderGeometry(.15,.3,2,5),wood,this.root,[x,1,z]);this.mesh(new THREE.ConeGeometry(1.3,3.5,6),grass,this.root,[x,3,z]);}
@@ -55,7 +57,7 @@ export class WorldView {
       const ring=this.mesh(new THREE.RingGeometry(5.95,6,48),new THREE.MeshBasicMaterial({color:c.gold,transparent:true,opacity:0,side:THREE.DoubleSide}),group,[0,.025,0]);ring.rotation.x=-Math.PI/2;this.lamps.push({group,bulb,core,light,ring,tear,bar,fill});
     }
     // Separate renderer-only stars never consume simulation randomness.
-    const stars=[];for(let i=0;i<240;i++)stars.push(Math.sin(i*43.3)*110,35+(i%60),Math.cos(i*19.7)*110);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(stars,3));this.root.add(new THREE.Points(geo,new THREE.PointsMaterial({color:c.text,size:.13})));
+    const stars=[];for(let i=0;i<240;i++)stars.push(Math.sin(i*43.3)*110,35+(i%60),Math.cos(i*19.7)*110);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(stars,3));this.stars=new THREE.Points(geo,new THREE.PointsMaterial({color:c.text,size:.13}));this.root.add(this.stars);
     this.camera.position.set(game.player.pos[0],game.player.pos[1]+18,game.player.pos[2]+22);this.yaw=0;
   }
   resize(benchmark=false){this.benchmark=benchmark;const width=benchmark?1280:innerWidth,height=benchmark?720:innerHeight;this.renderer.setPixelRatio(benchmark?1:Math.min(devicePixelRatio,1.5));this.renderer.setSize(width,height,false);this.camera.aspect=width/height;this.camera.updateProjectionMatrix();}
@@ -64,8 +66,7 @@ export class WorldView {
   render(game,time,delta){
     const p=game.player;for(const layer of this.upperLayers){layer.mesh.material.transparent=p.pos[1]<layer.height-.2;layer.mesh.material.opacity=layer.mesh.material.transparent?.25:1;layer.mesh.material.depthWrite=!layer.mesh.material.transparent;}this.player.position.fromArray(p.pos);this.player.visible=!(game.invuln>0&&Math.floor(time*12)%2===0)&&game.respawn===0;this.player.rotation.y=Math.atan2(game.facing[0],game.facing[1]);
     const moving=Math.hypot(p.vel[0],p.vel[2])>.1;this.legs[0].rotation.x=moving?Math.sin(time*13)*.5:0;this.legs[1].rotation.x=-this.legs[0].rotation.x;
-    this.sync(game.motes,this.motes,()=>{const v=this.mesh(new THREE.SphereGeometry(.16,6,6),this.gold);v.castShadow=false;return v;},(v,m)=>{v.position.set(m.pos[0],m.pos[1]+.55+Math.sin(time*3+m.pos[0])*.15,m.pos[2]);v.scale.setScalar(m.kind==='dropped'?.8:1);});
-    this.sync(game.shades,this.shades,()=>{const g=new THREE.Group();this.root.add(g);this.mesh(new THREE.SphereGeometry(.65,10,8),this.shadeMaterial.clone(),g);const rim=this.mesh(new THREE.TorusGeometry(.65,.035,4,20),material(c.shadeRim,{emissive:c.shadeRim,emissiveIntensity:1}),g);rim.rotation.x=Math.PI/2;for(const x of [-.2,.2])this.mesh(new THREE.SphereGeometry(.075,6,6),material(c.shadeRim,{emissive:c.shadeRim,emissiveIntensity:2}),g,[x,.1,.55]);return g;},(v,s)=>{v.position.fromArray(s.pos);v.position.y+=Math.sin(time*3)*.1;v.lookAt(p.pos[0],v.position.y,p.pos[2]);v.children[0].material.color.setHex(s.state==='stunned'?c.stunned:c.shade);v.scale.setScalar(s.state==='spawning'?.4:1);const accent=accessibilityPalette(this.colorblind).shadeAccent;for(const part of v.children.slice(1)){part.material.color.setHex(accent);part.material.emissive.setHex(accent);}});
+    this.actors.render(game,time,this.colorblind);this.stars.visible=!this.standardBenchmark;
     this.sync(game.drifters.filter(d=>d.state!=='removed'),this.drifters,()=>{const g=new THREE.Group();this.root.add(g);for(let i=0;i<5;i++)this.mesh(new THREE.PlaneGeometry(.4,.8),material(c.drifter,{side:THREE.DoubleSide,emissive:c.drifter,emissiveIntensity:.4}),g,[i*.25,0,0]);return g;},(v,d)=>{v.position.set(d.pos[0],d.pos[1]+.5,d.pos[2]);v.rotation.y=time;v.children.forEach((m,i)=>m.position.y=Math.sin(time*6-i)*.2);});
     this.sync(game.charms,this.charms,()=>{const v=this.mesh(new THREE.BoxGeometry(.45,.7,.08),material(c.scarf,{emissive:c.gold,emissiveIntensity:.2}));const border=this.mesh(new THREE.BoxGeometry(.52,.77,.04),material(c.gold),v,[0,0,-.04]);return v;},(v,ch)=>{v.visible=ch.available;v.position.set(ch.pos[0],ch.pos[1]+.8+Math.sin(time*2)*.12,ch.pos[2]);v.rotation.y=time;});
     const lit=game.lanterns.filter(l=>l.lit).length;this.ambient.intensity=.15+.55*lit/game.lanterns.length;
@@ -75,8 +76,8 @@ export class WorldView {
       v.core.material.emissiveIntensity=l.lit?2*brightness:0;v.light.intensity=l.lit?35*brightness:0;v.ring.material.opacity=protects(l)?.22:0;
       v.bar.visible=l.lit&&appearance.blinkOn;v.bar.quaternion.copy(this.camera.quaternion);v.fill.scale.x=appearance.fuelRatio;v.fill.position.x=-.9+.9*appearance.fuelRatio;v.fill.material.color.setHex(appearance.weak&&this.colorblind?0xffffff:c.gold);
     });
-    if(game.state!=='paused')this.pulseAge+=delta;this.pulse.material.opacity=Math.max(0,1-this.pulseAge/.5)*.7;this.pulse.scale.setScalar(Math.max(.01,this.pulseAge/.5*5));
-    this.leaves.visible=game.wind.warning||game.wind.active;this.leaves.position.fromArray(p.pos);this.leaves.children.forEach((v,i)=>{const a=time*2+i;v.position.set(Math.sin(a)*5,1+(i%5),Math.cos(a)*5);v.rotation.z=a;});
-    const target=new THREE.Vector3(p.pos[0],p.pos[1]+1.2,p.pos[2]);const desired=new THREE.Vector3(target.x+Math.sin(this.yaw)*16,target.y+13,target.z+Math.cos(this.yaw)*16);this.camera.position.lerp(desired,1-Math.exp(-8*delta));this.camera.lookAt(target);this.renderer.render(this.scene,this.camera);
+    if(game.state!=='paused')this.pulseAge+=delta;this.pulse.visible=!this.standardBenchmark&&!this.reducedMotion;this.pulse.material.opacity=Math.max(0,1-this.pulseAge/.5)*.7;this.pulse.scale.setScalar(Math.max(.01,this.pulseAge/.5*5));
+    this.leaves.visible=!this.standardBenchmark&&!this.reducedMotion&&(game.wind.warning||game.wind.active);this.leaves.position.fromArray(p.pos);this.leaves.children.forEach((v,i)=>{const a=time*2+i;v.position.set(Math.sin(a)*5,1+(i%5),Math.cos(a)*5);v.rotation.z=a;});
+    if(this.benchmarkCamera){this.camera.position.fromArray(this.benchmarkCamera);this.camera.lookAt(0,0,0);}else{const target=new THREE.Vector3(p.pos[0],p.pos[1]+1.2,p.pos[2]);const desired=new THREE.Vector3(target.x+Math.sin(this.yaw)*16,target.y+13,target.z+Math.cos(this.yaw)*16);if(this.reducedMotion)this.camera.position.copy(desired);else this.camera.position.lerp(desired,1-Math.exp(-8*delta));this.camera.lookAt(target);}this.renderer.render(this.scene,this.camera);
   }
 }

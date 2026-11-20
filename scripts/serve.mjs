@@ -1,3 +1,2 @@
-import {createServer} from 'node:http';import {readFile} from 'node:fs/promises';import {resolve,extname} from 'node:path';
-const root=resolve('dist');const mime={'.html':'text/html; charset=utf-8','.css':'text/css','.mjs':'text/javascript','.js':'text/javascript'};
-createServer(async(req,res)=>{try{const p=resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname==='/'?'/index.html':new URL(req.url,'http://localhost').pathname));if(!p.startsWith(root+'/')&&!p.startsWith(root+'\\')){res.writeHead(403).end();return;}res.setHeader('Content-Type',mime[extname(p)]??'application/octet-stream');res.end(await readFile(p));}catch{res.writeHead(404).end('Not found');}}).listen(4173,'127.0.0.1',()=>console.log('Local: http://127.0.0.1:4173'));
+// Compatibility entry point: use the same server and leaderboard persistence.
+import './run.mjs';

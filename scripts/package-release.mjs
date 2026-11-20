@@ -1,0 +1,8 @@
+import {cpSync,mkdirSync,writeFileSync,readFileSync,readdirSync} from 'node:fs';import {resolve,join,relative} from 'node:path';import {execFileSync} from 'node:child_process';import {createHash} from 'node:crypto';
+const root=resolve('.'),stage=resolve('release/dao-den-long-v1.0.0');if(!stage.startsWith(resolve('release')+'/')&&!stage.startsWith(resolve('release')+'\\'))throw Error('Invalid package destination');mkdirSync(stage,{recursive:true});
+for(const dir of ['dist','src','tests','docs'])cpSync(dir,join(stage,dir),{recursive:true,filter:path=>!path.toLowerCase().endsWith('.mp4')});
+mkdirSync(join(stage,'scripts'),{recursive:true});
+for(const file of ['run.mjs','serve.mjs','http-server.mjs','leaderboard-store.mjs','bench.mjs','soak.mjs','build.mjs','verify.mjs'])cpSync(join('scripts',file),join(stage,'scripts',file));
+for(const file of ['README.md','AGENTS.md','LICENSE','CREDITS.md','CHANGELOG.md','game.contract.json','package.json','package-lock.json','bench.json','soak.json','index.html','bench.html','demo.html','style.css','phase3.css','phase4.css'])cpSync(file,join(stage,file));
+const files=[];function scan(dir){for(const item of readdirSync(dir,{withFileTypes:true})){const path=join(dir,item.name);if(item.isDirectory())scan(path);else files.push({path:relative(stage,path).replaceAll('\\','/'),bytes:readFileSync(path).length,sha256:createHash('sha256').update(readFileSync(path)).digest('hex')});}}scan(stage);
+const sourceCommit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();writeFileSync(join(stage,'release-manifest.json'),JSON.stringify({version:'1.0.0',contract_version:'1.3',source_commit:sourceCommit,files},null,2)+'\n');console.log(JSON.stringify({stage,source_commit:sourceCommit,files:files.length}));

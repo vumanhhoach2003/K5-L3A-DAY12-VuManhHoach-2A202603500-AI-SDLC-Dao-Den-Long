@@ -130,7 +130,7 @@ export class Game {
     }
     this.emit('pulse',{stunned_ids:ids});
   }
-  moveEnemies(){
+  moveEnemies(wanderOnly=false){
     const p=this.player;
     for(const s of this.shades){
       if(s.state==='spawning')continue;
@@ -144,7 +144,7 @@ export class Game {
         else continue;
       }
       if(s.state==='chase'&&d>18)s.state='wander';
-      if(s.state==='wander'&&d<=12)s.state='chase';
+      if(!wanderOnly&&s.state==='wander'&&d<=12)s.state='chase';
       if(s.state==='chase'&&this.respawn===0)this.moveMob(s,direction(s.pos,p.pos),Math.min(d,(this.night===3?4.5:4)/60));
       else if(s.state==='wander'){
         const nearest=list=>list.sort((a,b)=>distance(s.pos,a.pos)-distance(s.pos,b.pos)||a.id.localeCompare(b.id))[0];
