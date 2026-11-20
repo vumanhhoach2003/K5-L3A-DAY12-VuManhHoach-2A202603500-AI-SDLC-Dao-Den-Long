@@ -1,0 +1,41 @@
+﻿{
+    "checked_at":  "2026-11-20T09:02:21.6217779Z",
+    "resources":  [
+                      {
+                          "path":  "/",
+                          "status":  200,
+                          "bytes":  2205
+                      },
+                      {
+                          "path":  "/style.css",
+                          "status":  200,
+                          "bytes":  3767
+                      },
+                      {
+                          "path":  "/src/game.mjs",
+                          "status":  200,
+                          "bytes":  6744
+                      },
+                      {
+                          "path":  "/src/view.mjs",
+                          "status":  200,
+                          "bytes":  11019
+                      },
+                      {
+                          "path":  "/vendor/three.module.js",
+                          "status":  200,
+                          "bytes":  626071
+                      },
+                      {
+                          "path":  "/vendor/three.core.js",
+                          "status":  200,
+                          "bytes":  1405971
+                      },
+                      {
+                          "path":  "/vendor/THREE-LICENSE.txt",
+                          "status":  200,
+                          "bytes":  1081
+                      }
+                  ],
+    "browser_visual_qa":  "blocked: CUA could not determine the current browser URL on Windows"
+}
