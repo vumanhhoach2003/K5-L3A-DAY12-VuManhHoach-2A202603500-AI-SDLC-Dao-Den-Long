@@ -1,10 +1,10 @@
-# Đảo Đèn Lồng · Phase 2 — Ba hòn đảo
+# Đảo Đèn Lồng · Phase 3 — Đèn cạn dầu
 
-Game 3D góc nhìn thứ ba: cùng Mây giữ ánh sáng qua Đảo Bến, Đảo Cau và Đảo Chuông. **Test Contract v1.1** và số liệu chuẩn của [Ticket-02](docs/spec/ticket_02_phase_2.md). Phase 1 được giữ nguyên ở tag `phase-1`; bản hiện tại gồm sửa điều khiển camera sau lần chơi thử.
+Game 3D qua ba Đêm, **Contract v1.2**. Mục tiêu mới: **giữ ít nhất 60% số đèn sáng tại bình minh**, thay vì thắng ngay khi thắp hết. Đèn hao dầu, có thể tắt; Bóng Mực hút đèn yếu. Luật nguồn: [Ticket-03](docs/spec/ticket_03_phase_3.md).
 
-## Cài đặt và chơi
+## Chạy game
 
-Node.js **22+**, npm và trình duyệt WebGL trên Windows/macOS/Linux. Chạy trong thư mục repo:
+Cần Node.js **22+**, npm và trình duyệt WebGL trên Windows/macOS/Linux. Từ thư mục repo:
 
 ```sh
 npm ci
@@ -12,64 +12,72 @@ npm run build
 npm start
 ```
 
-Mở **http://127.0.0.1:4173/**, nếu đã mở bản cũ hãy **Ctrl+F5**. Chọn Bắt đầu → giới thiệu Đêm → chơi. Thắng để sang Đêm tiếp theo; thắng Đêm 3 thấy Bình Minh và tổng điểm các Đêm đã thắng. Thua chơi lại đúng Đêm đó. Không mở bằng `file://`. `dist/` có thể phục vụ trên static hosting, không cần CDN.
+Mở **http://127.0.0.1:4173/**; nếu đã chơi bản cũ, **Ctrl+F5**. Vào hành trình → giới thiệu Đêm → chơi → kết quả → Đêm tiếp. Thua được chơi lại đúng Đêm; thắng Đêm 3 thấy tổng điểm. Thư mục `dist/` có đủ tài nguyên để phục vụ trên static hosting, không cần CDN. Không mở bằng `file://`.
 
-| Điều khiển | Hành động |
+| Phím | Hành động |
 | --- | --- |
-| W A S D | Đi theo hướng camera thực tế |
-| Space | Nhảy khi chạm đất |
-| Shift | Lướt theo hướng đi, hoặc hướng quay mặt khi đứng yên |
-| E | Nạp đom đóm vào đèn chưa sáng gần nhất |
+| WASD | Đi theo camera thực tế |
+| Space / Shift | Nhảy / lướt |
+| E | Nạp đèn chưa sáng, thắp lại hoặc châm dầu đèn đang sáng |
 | Q | Tỏa Sáng, tốn 3 đom đóm |
-| ← / → hoặc kéo chuột trên cảnh | Xoay camera |
-| P / Esc / nút Tạm dừng | Dừng; có Tiếp tục, Chơi lại Đêm, Cài đặt, Về menu |
-| R | Chơi lại Đêm hiện tại |
+| ← / → hoặc kéo chuột | Xoay camera |
+| P / Esc | Tạm dừng, tiếp tục, chơi lại, cài đặt, về menu |
+| R | Chơi lại Đêm |
 
-Âm lượng và độ nhạy chuột được lưu bằng localStorage. Âm thanh bắt đầu sau thao tác vào Đêm, theo quy định autoplay của trình duyệt.
+Cài đặt âm lượng, độ nhạy và **Bảng màu dễ phân biệt** được lưu trên thiết bị. Chế độ màu đổi viền/mắt Bóng Mực sang xanh #00B3FF, cảnh báo trắng kèm ⚠. Đèn tắt xẹp 20% và có vết rách, phân biệt không cần màu. Âm thanh bắt đầu sau thao tác vào Đêm.
 
-## Luật chuẩn
+## Luật mới
 
-- Chạy 6 m/s; nhảy 7 m/s, trọng lực −20 m/s²; lướt 14 m/s trong 12 tick, hồi 90 tick. Lướt trên không giữ độ cao, không bất tử.
-- Mang 10 đom đóm; nhặt trong XZ ≤1 m, chênh cao ≤1,5 m. Mỗi đèn cần 10 con, nạp nhiều lần, bán kính 2 m. Đèn sáng bảo vệ trong 6 m.
-- Tỏa Sáng xét cầu 3D bán kính 5 m tại chân Mây +0,8 m, choáng 120 tick, đẩy 4 m trong 15 tick, hồi 180 tick.
-- Bóng Mực phát hiện trong 12 m, bỏ đuổi ngoài 18 m; chạy 4 m/s, Đêm 3 là 4,5 m/s. Bị chạm mất một Ngọn Lửa, rơi nửa túi (làm tròn xuống), bất tử 90 tick; đom đóm rơi tồn tại 480 tick và nhặt lại được.
-- Ngoài đảo thì rơi; Y <−10 mất một Ngọn Lửa và cả túi, đợi 60 tick rồi về gốc với bất tử 90 tick. Hết máu thua ngay.
-- Đêm 2/3 có Gió Lạc cướp tối đa 3 con rồi chạy; Tỏa Sáng lúc nó đang mang đồ để lấy lại. Bùa Gió tăng chạy lên 7,2 m/s và bỏ hồi lướt trong 600 tick, tái xuất sau 2700 tick.
-- Bục xanh phóng Mây; cầu tre có thể rơi. Đêm 3 theo dốc lên tầng 1 rồi bục lên tầng 2; gió đến mỗi 30 giây, báo trước 2 giây, đẩy 2 m/s trong 5 giây.
-- Mỗi Đêm hồi đầy 3 Ngọn Lửa. Thời lượng 300/330/360 giây, số đèn 5/6/7.
+- Đêm 1/2/3 dài **240/270/300 giây**, cần **3/5, 4/6, 5/7** đèn đang sáng ở tick cuối. Thắp đủ sớm vẫn tiếp tục chơi. Hết máu luôn thua trước, kể cả tại bình minh.
+- Thắp lần đầu cần **10** con, dầu lên **100**. Đèn hao **1 dầu/giây**; cạn thì tắt và mất tiến độ nạp. Đèn đã từng sáng chỉ cần **5** để thắp lại.
+- E bên đèn sáng để châm: mỗi con thêm **10 dầu**, làm tròn lên số con cần dùng, không vượt 100. Chọn đèn nhận được gần nhất trong 2 m, bằng nhau chọn id nhỏ hơn; đèn thật sự đầy bị bỏ qua.
+- Dầu **≥30** có vùng an toàn 6 m; dưới30 mất vùng an toàn và nhấp nháy 1 Hz. Thanh dầu nằm trên đèn. Refuel khôi phục vùng an toàn và đẩy địch ra mép.
+- Bóng Mực wander tìm đèn yếu gần nhất, tới trong 2 m thì `drain`, hút **5 dầu/giây/con**, cộng với hao tự nhiên. Mây tới trong 6 m làm nó đuổi; Q làm choáng và ngừng hút. Chase không bỏ Mây để chạy sang đèn yếu.
+- Sức chứa là **min(20, 10 + 2 × số lần thắp thành công)**, tính cả thắp lại, reset đầu Đêm. Châm dầu không tăng sức chứa; đèn dựng sẵn từ scenario không tăng.
 
-Điểm: **+10 mỗi con nạp** (nhặt không có điểm), +100 mỗi đèn, +5 mỗi Bóng Mực trúng xung. Thắng thêm `floor(giây còn lại)×2 + 50×Ngọn Lửa còn lại`. Tổng chỉ cộng các Đêm đã thắng.
+Đi lại, nhảy, lướt, bùa, Gió Lạc, rơi/hồi sinh, bản đồ và thứ tự tick giữ các luật Phase 2 chưa bị thay. Xem [Ticket-02](docs/spec/ticket_02_phase_2.md) và [changelog các thay đổi phá tương thích](CHANGELOG.md).
+
+## Điểm Phase 3
+
+| Sự kiện | Điểm |
+| --- | --- |
+| Mỗi con nạp/châm | +5 |
+| Thắp lần đầu / thắp lại | +100 / +40 |
+| Pulse mỗi Bóng Mực | +5; tổng +15 nếu đang drain |
+| Bình minh khi thắng | +50 + floor(dầu thật) mỗi đèn đang sáng, +50 mỗi Ngọn Lửa |
+
+Không còn thưởng thời gian hoặc điểm khi nhặt. Tổng game chỉ cộng các Đêm đã thắng; chơi lại không cộng trùng.
 
 ## Headless và kiểm chứng
 
 ```sh
 npm test
 npm run verify
-node src/headless.mjs --seed 42 --night 2 --scenario tests/scenarios/phase-2/charm.json --inputs tests/scenarios/phase-2/charm.inputs.json --ticks 180 --out result.jsonl --snapshot-every 10
+node src/headless.mjs --seed 42 --night 1 --scenario tests/scenarios/phase-3/relight-at-expiry.json --inputs tests/scenarios/phase-3/relight-at-expiry.inputs.json --ticks 60 --out result.jsonl --snapshot-every 10
 ```
 
-`--night` nhận 1, 2, 3. Không cung cấp scenario/inputs thì dùng màn mặc định/người chơi đứng yên. Mô phỏng cố định 60Hz, không GPU. Input giữ giá trị cũ; jump/interact/pulse/dash/pause kích hoạt cạnh lên. `tick` tăng khi paused, `sim_tick` và mọi logic dừng. JSONL có snapshot tick0, sự kiện `night_start` tick0, snapshot theo chu kỳ và `end` cuối. Tọa độ làm tròn 3 số lẻ. Dữ liệu scenario/inputs sai trả mã2 và stderr; lỗi tham số/I/O khác trả khác0.
+**58 test** và **42 scenario** được kiểm chứng, gồm các test hồi quy còn hiệu lực. Mỗi scenario chạy hai lần so byte, assert kết quả và đo thời gian. `npm run verify` trả lỗi khi test đỏ, sai kỳ vọng hoặc không tất định; lưu [bằng chứng Phase 3](docs/proof/phase-3/verification.json). CI Ubuntu dùng cùng lệnh; chưa tự xác nhận kết quả CI mới hoặc bộ test ẩn.
 
-**38 test** gồm hồi quy, cơ chế mới, CLI, chuỗi Đêm, lưu cài đặt và phép chiếu A/D theo camera. **23 scenario** dưới [tests/scenarios/phase-2](tests/scenarios/phase-2/) có kết quả mong đợi trong `manifest.json`. `npm run verify` kiểm tra kết quả, so output từng byte hai lượt, đo thời gian headless và lưu [bằng chứng Phase 2](docs/proof/phase-2/verification.json). Bộ kiểm chứng dừng khi test đỏ hoặc sai kỳ vọng. CI Ubuntu dùng cùng lệnh, giữ riêng bằng chứng Phase 1.
+CLI nhận Đêm 1/2/3, seed, scenario, inputs, ticks, out, snapshot-every (mặc định10). Không GPU, cố định60Hz. Input giữ giá trị/cạnh lên. Pause chỉ tăng tick, đóng băng sim_tick và gameplay. Snapshot đầu tick 0, sự kiện night_start, end bắt buộc ở cuối. Dữ liệu scenario/inputs sai trả mã2 và stderr, lỗi tham số/I/O trả khác0.
 
-Fixture `full-route` đi bộ, nhặt 50 con và nạp cả 5 đèn từ đầu, tắt sinh ngẫu nhiên để cô lập hành vi. Các fixture `win-night*` kiểm tra riêng đèn cuối dựng sẵn, không chứng minh người đã chơi thắng cả ba Đêm mặc định. Các fixture `duration-night*` bảo vệ người chơi bằng đèn dựng sẵn để chạy hết thời lượng và đo headless. Xem [tiêu chí nghiệm thu](docs/spec/phase-2-acceptance.md).
+Snapshot v1.2 thêm fuel (một chữ số lẻ), ever_lit, relit_count và capacity; scenario thêm fuel/ever_lit/successful_lights/target_lantern_id. Event mới refuel, lantern_out, fuel_drain; lantern_lit có relight. Lý do thắng là dawn_survived, không còn all_lit. [game.contract.json](game.contract.json) được test khớp tuning runtime.
 
-## Hiệu năng và phần cần xác nhận
+Dầu nội bộ là số nguyên 1/60; không lấy số snapshot làm logic. Vì làm tròn, snapshot30.0 có thể là dầu thật 29,983: vùng an toàn dựa trên dầu thật. Đèn đầy 100 tại tick 0 sẽ hao 1/60 ở bước 2 trước khi xét E tại bước 5, nên có thể nhận 1 con để bù. Xem [ADR](docs/adr/003-lantern-fuel-and-dawn.md) để biết thứ tự và các quyết định.
 
-Chạy đủ 18.000 / 19.800 / 21.600 tick đã đạt ngưỡng headless **<30 giây** trên máy ghi trong `verification.json`. Đây không phải số FPS.
+## Bằng chứng và giới hạn
 
-Để đo render thực tế: đang chơi nhấn **P → Đo FPS 1280 × 720**. Game dùng framebuffer 1280×720, pixel ratio1, đo 30 giây rồi tải `phase-2-fps.json`. Giữ cửa sổ phía trước và tiếp tục chơi; lượt có ẩn cửa sổ, tạm dừng hoặc kết thúc màn bị đánh dấu không hợp lệ. Cần FPS trung bình ≥30. Chạy lại trên từng Đêm để kiểm tra cảnh nặng hơn.
+Fixture **maintain-to-dawn** dùng input di chuyển/nhặt/châm, giữ3 đèn đến tick 14400 rồi thắng (768 điểm). Nó đặt sẵn đèn và kho đom đóm, tắt địch để cô lập bảo trì; các scenario drain riêng kiểm tra địch. Fixture **full-route-no-early-win** nhặt50 con và thắp5 đèn, vẫn playing ở tick1427. Không nhận đây là bằng chứng người đã chơi thắng màn mặc định.
 
-**Đã có xác nhận chơi thử Phase 2 từ người dùng:** giao diện ổn, có âm thanh. [File FPS nguyên gốc](docs/proof/phase-2/phase-2-fps.json) ghi **143,32 FPS** tại **1280×720**, pixel ratio 1, trong **30,003 giây ở Đêm 2**, đạt ngưỡng ≥30 FPS. Đã kiểm tra lại phép tính 4300 frame/thời lượng và giữ nguyên file. Xem [ghi nhận nghiệm thu](docs/proof/phase-2/manual-acceptance.md).
+Các fixture thời lượng chạy đủ 14.400/16.200/18.000tick với sinh địch/đom đóm, người chơi được đặt bất tử để chạy hết giờ; gió tắt để cô lập benchmark. Mốc ≤30giây headless được kiểm tra. Đây không phải FPS.
 
-Giới hạn: đây là người dùng xác nhận, không phải agent trực tiếp quan sát. File không có trường `gameplay_entire_run`, không có cấu hình GPU/CPU, chưa đo riêng Đêm 1/3. Xác nhận “có âm thanh” không chứng minh từng hiệu ứng riêng; không suy rộng thành đã kiểm tra chi tiết mọi mục UI. Chưa xác nhận test ẩn hoặc CI Linux mới.
+**Giao diện Phase 3 đang chờ người dùng chơi thử**, đặc biệt thanh dầu, nhấp nháy, refuel/relight và bảng màu dễ phân biệt. Agent đã kiểm tra logic, build/cú pháp và HTTP; công cụ UI Windows trước đó bị chặn xác minh URL. Xác nhận giao diện/âm thanh và143,32FPS trước đây thuộc Phase 2, không dùng để xác nhận renderer Phase 3. Có thể đo lại bằng P → Đo FPS1280×720, xuất `phase-3-fps.json`.
 
 ## Sáng tạo của tôi
 
-Biển mây, sao, thông điệp của Ông Đăng, vùng sáng quanh đèn, lá báo gió và âm nhạc thủ tục. Tầng cao chuyển trong suốt khi Mây ở dưới để không che nhân vật tại gốc xuất phát Đêm 3. Chỉ là hiển thị/âm thanh, không thay số liệu hoặc thêm thực thể vào headless. Các output đã được kiểm tra tất định.
+Giữ biển mây, sao, câu nói Ông Đăng, âm nhạc thủ tục và hiệu ứng ánh sáng. Điều chỉnh vòng an toàn theo dầu, thêm thanh dầu và thông điệp bảo trì. Sàn cao trong suốt khi nhân vật bên dưới. Các phần này chỉ là trình bày, không thêm entity hoặc thay đầu ra headless; các kịch bản vẫn tất định.
 
 ## Tài liệu bàn giao
 
-[Ticket-02](docs/spec/ticket_02_phase_2.md) · [Tiêu chí nghiệm thu](docs/spec/phase-2-acceptance.md) · [Giả định, test thay thế và nhật ký AI](docs/notes/phase-2.md) · [AGENTS](AGENTS.md) · [CREDITS](CREDITS.md) · [LICENSE](LICENSE).
+[Tiêu chí nghiệm thu](docs/spec/phase-3-acceptance.md) · [ADR](docs/adr/003-lantern-fuel-and-dawn.md) · [Changelog](CHANGELOG.md) · [Ghi chép và lý do đổi test](docs/notes/phase-3.md) · [AGENTS](AGENTS.md) · [CREDITS](CREDITS.md) · [LICENSE](LICENSE).
 
-[README Phase 1](docs/phase-1-README.md) · [README lab gốc](docs/lab-README.md) · [Hướng dẫn lab](GUIDE.md) · [Nộp bài](SUBMISSION.md). Không sửa các tag đã phát hành. Release v1.0.0/video thuộc Phase 4, không tạo ở Phase 2.
+[README Phase 2](docs/phase-2-README.md) · [README Phase 1](docs/phase-1-README.md) · [README lab](docs/lab-README.md). Giữ nguyên tag phase-1/phase-2; bàn giao tag phase-3 riêng. Release v1.0.0 và video thuộc Phase 4.
