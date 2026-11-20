@@ -16,8 +16,8 @@ Nguồn: Ticket-03, Contract v1.2. Kiểm tra cùng các luật Phase 1–2 khô
 | Duy trì sáng thật | Dùng input đi bộ/nhặt/châm để giữ3 đèn tới tick 14400 | maintain-to-dawn: won, dawn_survived, 768 điểm; fixture tắt địch và đặt sẵn đồ để cô lập upkeep |
 | Sức chứa | 10+2×successful_lights, tối đa20; thắp lại cũng tăng; đặt sẵn không tính; reset mỗi Đêm | capacity-growth/cap, full-route-no-early-win; unit tests pickup/reset |
 | Điểm | Nạp5; thắp100/40; pulse5/15; bonus dầu/máu chỉ khi thắng, không thưởng thời gian | refuel-ceil/relight/pulse-drain và các test bonus/terminal priority |
-| HUD/thanh dầu | Đèn sáng có thanh dầu; dưới30 nhấp nháy 1 Hz; HUD carried/capacity | scene.mjs/view.mjs; helper appearance có test; **chờ quan sát bản Phase 3** |
-| Bảng màu dễ phân biệt | Lưu boolean; viền/mắt #00B3FF; cảnh báo trắng có⚠; đèn tắt xẹp20% và rách | campaign.test + accessibility helper tests; **chờ thử renderer/settings thật** |
+| HUD/thanh dầu | Đèn sáng có thanh dầu; dưới30 nhấp nháy 1 Hz; HUD carried/capacity | Helper có test; người dùng xác nhận có thanh dầu và nhấp nháy dưới30; chưa đo tần số hoặc xác nhận riêng HUD sức chứa |
+| Bảng màu dễ phân biệt | Lưu boolean; viền/mắt #00B3FF; cảnh báo trắng có⚠; đèn tắt xẹp20% và rách | Unit tests đạt; người dùng đã bật chế độ và thấy thanh dầu yếu chuyển trắng; các chi tiết khác chưa được xác nhận riêng |
 | Regression | Movement/camera, dash, jump, drop, fall, bùa, Gió Lạc, map/pads/wind, pause, CLI | Test cũ còn hiệu lực và 16 scenario kế thừa, không skip |
 | Contract | v1.2 đúng tuning, snapshot/event/scenario mới, CLI dữ liệu lỗi, seed tất định | game.test, phase3.test, 42 scenario so byte |
 

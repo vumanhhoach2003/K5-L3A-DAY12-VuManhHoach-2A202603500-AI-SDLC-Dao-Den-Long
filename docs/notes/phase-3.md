@@ -47,3 +47,7 @@ Không có usage/billing chính xác. Ước lượng thô20.000–40.000token c
 Bài học: thứ tự tick quan trọng hơn giá trị hiển thị; cần test riêng30thật và30.0làmtròn, expiry rồi relight trong cùng tick, refuel trước contact và bonus từ dầu chưa làm tròn. Tài liệu ADR/changelog giúp người chấm hiểu thay đổi thay vì coi regression là lỗi ngẫu nhiên.
 
 Chưa biết mốc giờ Coach nên không khẳng định đúng hạn. Tag phase-3 giữ bàn giao và nêu giới hạn QA; không sửa tag Phase 1/2, chưa làm Release/video của Phase 4.
+
+## Bổ sung xác nhận hiển thị sau bàn giao
+
+Người dùng xác nhận có thanh dầu, nhấp nháy khi dưới30; trong chế độ màu đã bật, bình thường vàng và dầu yếu trắng. Lưu báo cáo tại `docs/proof/phase-3/manual-acceptance.md`. Xác nhận này thay thế ghi chú “chưa có quan sát thanh dầu”, trong đúng phạm vi được báo cáo; không tự nhận đã đo 1 Hz hoặc thử hết các chi tiết màu/refuel/relight. Không sửa gameplay, giữ nguyên tag phase-3 và bổ sung bằng chứng trên main.

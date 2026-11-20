@@ -70,7 +70,9 @@ Fixture **maintain-to-dawn** dùng input di chuyển/nhặt/châm, giữ3 đèn 
 
 Các fixture thời lượng chạy đủ 14.400/16.200/18.000tick với sinh địch/đom đóm, người chơi được đặt bất tử để chạy hết giờ; gió tắt để cô lập benchmark. Mốc ≤30giây headless được kiểm tra. Đây không phải FPS.
 
-**Giao diện Phase 3 đang chờ người dùng chơi thử**, đặc biệt thanh dầu, nhấp nháy, refuel/relight và bảng màu dễ phân biệt. Agent đã kiểm tra logic, build/cú pháp và HTTP; công cụ UI Windows trước đó bị chặn xác minh URL. Xác nhận giao diện/âm thanh và143,32FPS trước đây thuộc Phase 2, không dùng để xác nhận renderer Phase 3. Có thể đo lại bằng P → Đo FPS1280×720, xuất `phase-3-fps.json`.
+**Người dùng đã xác nhận thanh dầu Phase 3:** bình thường màu vàng, dưới 30 chuyển trắng và nhấp nháy khi bật bảng màu dễ phân biệt. Xem [ghi nhận chơi thử](docs/proof/phase-3/manual-acceptance.md). Đúng với hành vi đã triển khai; chưa có số đo tần số nhấp nháy hoặc xác nhận riêng mọi thành phần của chế độ màu/refuel/relight.
+
+Agent đã kiểm tra logic, build/cú pháp và HTTP; công cụ UI Windows trước đó bị chặn xác minh URL. Kết quả 143,32 FPS trước đây thuộc Phase 2, không dùng làm số FPS Phase 3. Có thể đo lại bằng P → Đo FPS 1280×720, xuất `phase-3-fps.json`.
 
 ## Sáng tạo của tôi
 
