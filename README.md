@@ -4,7 +4,7 @@ Game web 3D qua ba Đêm: thu thập đom đóm, duy trì đèn và tránh Bóng
 
 ![Chơi trong cảnh Đảo Đèn Lồng](docs/demo/gameplay.png)
 
-Ảnh lấy từ game đang chạy. [Video demo bàn giao](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/download/v1.0.0/demo.mp4) dài **3 phút 55 giây**, gồm video người dùng chơi thực tế (191,27 giây), tiếp theo là bằng chứng test/benchmark có nhãn nguồn. [Metadata bản gốc](docs/demo/manual/metadata.json), [metadata video cuối](docs/demo/final/metadata.json) và [video tự động nguồn](docs/demo/demo-auto.mp4) được ghi rõ riêng. Tải gói tại [Release v1.0.0](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0).
+Ảnh gameplay trích từ video người dùng chơi thực tế. [Xem demo trong repo](docs/demo/demo-auto.mp4) hoặc [tải video bàn giao](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/download/v1.0.0/demo.mp4): **3 phút 55 giây**, gồm video người dùng chơi (191,27 giây), tiếp theo là bằng chứng test/benchmark có nhãn nguồn. Tên `demo-auto.mp4` được giữ để tương thích đường dẫn cũ, nội dung đã thay bằng bản có người dùng chơi. [Metadata bản gốc](docs/demo/manual/metadata.json), [metadata video cuối](docs/demo/final/metadata.json); video tự động nguồn được lưu riêng tại [benchmark-evidence.mp4](docs/demo/benchmark-evidence.mp4). Tải gói tại [Release v1.0.0](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0).
 
 ## Chạy từ nguồn
 
@@ -68,6 +68,8 @@ npm run soak -- --seed 7 --nights 10 --out soak.json
 Benchmark mở Chromium riêng, cảnh chuẩn 1280×720: 200 Bóng Mực wander, 100 đom đóm, L1–L3 sáng với 100 dầu; tắt spawn/hit/pickup/decay/end, Mây đứng tại gốc. Camera bán kính 30m, cao 15m, một vòng 15 giây; warmup 3 giây rồi đo đúng 30 giây. CLI tự thoát và lưu `benchmark.png`. Đặt `LANTERN_BROWSER` tới executable Chromium/Chrome/Edge/Brave nếu không tự tìm được. Không dùng hồ sơ trình duyệt cá nhân.
 
 ![Cảnh benchmark thật](docs/demo/benchmark.png)
+
+Ảnh benchmark mới trích tại giây 211,72 của video tổng hợp, thuộc phần benchmark tự động có chú thích; ảnh gameplay trích tại giây 95,63 của video gốc người dùng. Cảnh chơi thường không được dùng thay cho bằng chứng benchmark chuẩn.
 
 | Số đo trên máy phát triển | Kết quả | Ngưỡng |
 | --- | --- | --- |

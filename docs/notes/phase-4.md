@@ -39,3 +39,9 @@ Trong kiểm tra đóng gói, Node --test tự tìm module browser tên ui-self-
 Video bàn giao giải mã thành công: 235,248233 giây, 1280×720, 40.808.105 byte; SHA-256 cef36b7b71ee0f26608eda04adee1c8fc2bc22ee0785d30eb199d8af56d3d119. Khung cuối có bằng chứng test/headless/soak/bench; nhãn tiếng Việt đã kiểm tra bằng ảnh decode. Bản xuất thử đầu có nhãn sai encoding, được sửa bằng meta charset UTF-8 và xuất lại; không dùng bản lỗi.
 
 Checkout sạch của commit 7f0eefd đã npm ci/build/start/verify thành công trong 33,90 giây. Các thay đổi sau đó chỉ là tài liệu, metadata video và helper kiểm tra video; src gameplay giữ cùng tree b15f9952a05aa3e4a499b8c2c8831d65b04c6532. Gói phát hành được build tiếp từ Git archive sạch của commit gắn tag; manifest ghi commit và SHA-256 từng file.
+
+## Cập nhật media theo yêu cầu sau phát hành
+
+Đã thay nội dung docs/demo/demo-auto.mp4 bằng đúng video tổng hợp trên Release (SHA-256 cef36b7b71ee0f26608eda04adee1c8fc2bc22ee0785d30eb199d8af56d3d119). Tên đường dẫn cũ được giữ; metadata cập nhật đúng 235,248233 giây. Nguồn tự động cũ được chuyển thành benchmark-evidence.mp4 để helper compose còn tái lập được, metadata nguồn lưu riêng. Không thay tag đã phát hành.
+
+gameplay.png lấy trực tiếp video gốc người dùng ở 95,633333 giây. benchmark.png lấy phần benchmark có nhãn nguồn của bản tổng hợp ở 211,723409 giây. Cả hai trích ở độ phân giải 1280×720; đã xem lại ảnh thực tế. Cảnh người dùng chơi không bị gắn nhãn là benchmark chuẩn. README và CREDITS đã cập nhật nguồn ảnh/video.
