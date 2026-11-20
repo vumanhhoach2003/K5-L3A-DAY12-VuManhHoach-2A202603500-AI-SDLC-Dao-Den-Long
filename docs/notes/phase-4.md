@@ -35,3 +35,7 @@ Không biết mốc giờ Coach, không tự xác nhận đúng hạn hoặc k�
 Đã nhận demo.mp4 từ người dùng. Browser giải mã: 191,266667 giây, 1280×720, 144.558.712 byte; SHA-256 af51e4e180cd81db1d7e51a6f1049014d2ce8efe0e73e1923607c1261b30875a. Khung mẫu cho thấy chơi, châm dầu, thua/lưu điểm. Bản gốc giữ nguyên ngoài repo; metadata/ảnh được lưu. Release nối gameplay này với đoạn bằng chứng từ giây 35 của demo-auto, có nhãn nguồn.
 
 Trong kiểm tra đóng gói, Node --test tự tìm module browser tên ui-self-test.mjs và báo lỗi môi trường DOM. Đổi tên thành ui-smoke-view.mjs để không bị nhận nhầm là test Node; không loại bỏ test mô phỏng. Build và verify sau đó đạt 64/64. PowerShell chặn npm.ps1; README hướng dẫn dùng npm.cmd, không yêu cầu đổi chính sách hệ thống.
+
+Video bàn giao giải mã thành công: 235,248233 giây, 1280×720, 40.808.105 byte; SHA-256 cef36b7b71ee0f26608eda04adee1c8fc2bc22ee0785d30eb199d8af56d3d119. Khung cuối có bằng chứng test/headless/soak/bench; nhãn tiếng Việt đã kiểm tra bằng ảnh decode. Bản xuất thử đầu có nhãn sai encoding, được sửa bằng meta charset UTF-8 và xuất lại; không dùng bản lỗi.
+
+Checkout sạch của commit 7f0eefd đã npm ci/build/start/verify thành công trong 33,90 giây. Các thay đổi sau đó chỉ là tài liệu, metadata video và helper kiểm tra video; src gameplay giữ cùng tree b15f9952a05aa3e4a499b8c2c8831d65b04c6532. Gói phát hành được build tiếp từ Git archive sạch của commit gắn tag; manifest ghi commit và SHA-256 từng file.

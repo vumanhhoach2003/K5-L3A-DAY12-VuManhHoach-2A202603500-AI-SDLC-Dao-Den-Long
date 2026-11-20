@@ -1,0 +1,28 @@
+{
+  "duration_s": 235.248233,
+  "width": 1280,
+  "height": 720,
+  "samples": [
+    {
+      "time_s": 23.524823
+    },
+    {
+      "time_s": 70.574469
+    },
+    {
+      "time_s": 117.624116
+    },
+    {
+      "time_s": 164.673763
+    },
+    {
+      "time_s": 211.723409
+    },
+    {
+      "time_s": 232.89575
+    }
+  ],
+  "bytes": 40808105,
+  "sha256": "cef36b7b71ee0f26608eda04adee1c8fc2bc22ee0785d30eb199d8af56d3d119",
+  "provenance": "Composed video: user gameplay followed by labelled automated benchmark and saved proof; browser-decoded sample frames"
+}

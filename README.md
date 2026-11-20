@@ -4,7 +4,7 @@ Game web 3D qua ba Đêm: thu thập đom đóm, duy trì đèn và tránh Bóng
 
 ![Chơi trong cảnh Đảo Đèn Lồng](docs/demo/gameplay.png)
 
-Ảnh lấy từ game đang chạy. [Video demo bàn giao](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/download/v1.0.0/demo.mp4) gồm video người dùng chơi thực tế (191,27 giây), tiếp theo là bằng chứng test/benchmark có nhãn nguồn. [Metadata bản gốc](docs/demo/manual/metadata.json) và [video tự động nguồn](docs/demo/demo-auto.mp4) được ghi rõ riêng. Tải gói tại [Release v1.0.0](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0).
+Ảnh lấy từ game đang chạy. [Video demo bàn giao](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/download/v1.0.0/demo.mp4) dài **3 phút 55 giây**, gồm video người dùng chơi thực tế (191,27 giây), tiếp theo là bằng chứng test/benchmark có nhãn nguồn. [Metadata bản gốc](docs/demo/manual/metadata.json), [metadata video cuối](docs/demo/final/metadata.json) và [video tự động nguồn](docs/demo/demo-auto.mp4) được ghi rõ riêng. Tải gói tại [Release v1.0.0](https://github.com/vumanhhoach2003/K5-L3A-DAY12-VuManhHoach-2A202603500-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0).
 
 ## Chạy từ nguồn
 

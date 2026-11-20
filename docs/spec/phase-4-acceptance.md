@@ -15,7 +15,7 @@ Nguồn: Ticket-04, Contract1.3. Giữ toàn bộ luật Phase1–3 chưa bị t
 | Regression | 64 test;42 scenario byte-identical hai lượt và hash bằng Phase3. Không biết test ẩn nên không tự nhận đã qua tất cả test ẩn. |
 | Cài sạch | check-clean.mjs xuất commit/tree nguồn, cài/build/start bằng3 lệnh và chạy verify trong thư mục mới. clean-checkout.json chứa kết quả thật. |
 | Tài liệu | README có ảnh/video, hệ thống, điều khiển, test/headless/bench/soak; changelog4phase, retro, credits/license, harness và ghi chép. |
-| Video | Đã nhận video người dùng chơi thực tế 191,27s,1280×720; hash và khung mẫu tại docs/demo/manual. MP4 bàn giao nối gameplay này với phần bằng chứng đo thật, có nhãn nguồn. Metadata bản tổng hợp tại docs/demo/release. |
+| Video | Video người dùng chơi thực tế 191,27s,1280×720; hash và khung mẫu tại docs/demo/manual. MP4 bàn giao nối gameplay này với bằng chứng đo thật, có nhãn nguồn: 235,248233s,1280×720,40.808.105bytes, dưới5phút. Metadata và khung cuối test tại docs/demo/final. |
 | Release | Gói web chạy sẵn có Node runner, source và dữ liệu đo; tagphase-4 và releasev1.0.0 chỉ tạo khi bàn giao được chuẩn bị. Trạng thái thực tế kiểm tra bằng Git/Release khi hoàn tất, không suy ra từ tên file. |
 
 Các giới hạn: số đo hiệu năng chỉ tham khảo trên máy hiện tại; máy giảng viên sẽ quyết định. DOM smoke không chứng minh toàn bộ bố cục ở mọi viewport, âm thanh ở mọi thiết bị hay trải nghiệm người chơi. Phản hồi Phase3 đầy đủ được người dùng xác nhận trong hội thoại, không dùng thay xác nhận các UI mới của Phase4.
