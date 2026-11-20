@@ -1,0 +1,71 @@
+﻿{
+    "checked_at":  "2026-11-20T09:41:16.7451892Z",
+    "resources":  [
+                      {
+                          "path":  "/",
+                          "status":  200,
+                          "bytes":  2231
+                      },
+                      {
+                          "path":  "/style.css",
+                          "status":  200,
+                          "bytes":  5683
+                      },
+                      {
+                          "path":  "/src/view.mjs",
+                          "status":  200,
+                          "bytes":  13566
+                      },
+                      {
+                          "path":  "/src/game.mjs",
+                          "status":  200,
+                          "bytes":  15985
+                      },
+                      {
+                          "path":  "/src/maps.mjs",
+                          "status":  200,
+                          "bytes":  3074
+                      },
+                      {
+                          "path":  "/src/tuning.mjs",
+                          "status":  200,
+                          "bytes":  570
+                      },
+                      {
+                          "path":  "/src/controls.mjs",
+                          "status":  200,
+                          "bytes":  575
+                      },
+                      {
+                          "path":  "/src/campaign.mjs",
+                          "status":  200,
+                          "bytes":  1020
+                      },
+                      {
+                          "path":  "/src/audio.mjs",
+                          "status":  200,
+                          "bytes":  2036
+                      },
+                      {
+                          "path":  "/src/scene.mjs",
+                          "status":  200,
+                          "bytes":  11486
+                      },
+                      {
+                          "path":  "/src/palette.mjs",
+                          "status":  200,
+                          "bytes":  322
+                      },
+                      {
+                          "path":  "/vendor/three.module.js",
+                          "status":  200,
+                          "bytes":  626071
+                      },
+                      {
+                          "path":  "/vendor/three.core.js",
+                          "status":  200,
+                          "bytes":  1405971
+                      }
+                  ],
+    "browser_visual_qa":  "unverified: browser access host unavailable; Windows input blocked because current URL could not be determined confidently"
+}

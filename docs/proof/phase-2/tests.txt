@@ -1,0 +1,46 @@
+✔ menu -> intros -> results -> dawn totals only won nights; retry stays at same night (3.9509ms)
+✔ volume and mouse sensitivity persist safely and malformed storage falls back (2.6003ms)
+✔ A/D move left/right on the rendered screen at every camera heading (25.4406ms)
+✔ contract v1.1 tuning matches runtime and standard values (7.1339ms)
+✔ regression: tick zero, fixed 60Hz, six meters, time and camera yaw (13.1335ms)
+✔ standard maps, lamps, distinct initial 20 motes and no initial shades (2.5302ms)
+✔ pickup radius and height inclusive, capacity ten; no pickup score (1.1871ms)
+✔ partial deposit, held button, nearest and lexicographic tie, deposit score (28.7759ms)
+✔ scenario is pristine and preserves omitted lamps (0.5829ms)
+✔ pulse uses 3D center feet+.8, spends three, pushes 4m over 15 ticks (8.7404ms)
+✔ pulse requires rising edge, enough motes and three second cooldown (5.3145ms)
+✔ pulse duplicate hit refreshes stun and scores again (1.7849ms)
+✔ dash lasts 12 ticks, standing direction +Z, no held retrigger and 90 tick cooldown (3.7171ms)
+✔ dash follows current movement or last facing, holds height in air, no invulnerability (2.2489ms)
+✔ jump uses gravity20, air control and requires fresh press after landing (6.2678ms)
+✔ one hit per tick in ID order, half drop, 90tick invulnerability and 60tick recoil (8.209ms)
+✔ shade contact height gate, invulnerability blocks hit but dash does not (1.3843ms)
+✔ dropped motes can be recovered from next step, expire after480, pause freezes TTL (8.2922ms)
+✔ safe zone protects and evacuates within30ticks; outside cannot cross edge (5.2484ms)
+✔ shade detection12 / leave18 and standard spawn ticks/limits (27.6694ms)
+✔ mote schedule240, unique free points and no immediate spawn pickup (4.1698ms)
+✔ fall ignores invulnerability, loses entire bag once, waits60 then respawns (2.5503ms)
+✔ last flame falling loses immediately without respawn; running off edge falls (2.1592ms)
+✔ pause only advances tick, resumes on edge, freezes all timers and spawning (1.7824ms)
+✔ charms speed7.2, 600tick effect, no dash cooldown and 2700tick respawn (32.6452ms)
+✔ drifter steals before shade hit even while invulnerable, flees then removes (4.8404ms)
+✔ drifter idle/chase threshold and pulse flee/drop branches (1.7665ms)
+✔ drifter spawn1200 only nights2/3, max2 live; ignores sanctuary (19.2173ms)
+✔ night2 bridge supports, outside bridge falls, both pads launch to opposite island (5.3887ms)
+✔ night3 ramp climbs, cliffs block, pad reaches tier2 and tower blocks (7.5644ms)
+✔ wind warns at1680, pushes exactly2m/s from1800 through2099 and freezes paused (23.311ms)
+✔ terminal priority no_flames > all_lit > dawn and standardized score (2.735ms)
+✔ required v1.1 snapshot arrays and fields, correct cooldown units (0.8795ms)
+✔ scenario zero state timers expire on first step; hit recoil travels exactly2m (0.8724ms)
+✔ drifter releases at its location; spawn cap also counts dropped motes (5.3144ms)
+✔ CLI accepts three nights, precise ticks, sticky inputs and byte identical output (965.761ms)
+✔ CLI paused ticks count toward limit; sim_tick freezes (179.5595ms)
+✔ CLI malformed old/new schema returns2 with stderr; invalid args/I/O nonzero (2594.7252ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4456.9775

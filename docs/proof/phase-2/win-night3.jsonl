@@ -1,0 +1,6 @@
+{"type":"snapshot","tick":0,"sim_tick":0,"night":3,"state":"playing","time_left_s":360,"score":0,"wind":{"active":false,"dir_deg":0,"warning":false},"player":{"pos":[0,0,0],"vel":[0,0,0],"grounded":true,"flames":3,"carried":10,"invuln":false,"invuln_ticks":0,"dash_cd_s":0,"pulse_cd_s":0,"charm_s":0,"respawn_s":0},"lanterns":[{"id":"L1","pos":[0,6,6],"deposited":10,"lit":true},{"id":"L2","pos":[18,3,10],"deposited":10,"lit":true},{"id":"L3","pos":[-18,3,10],"deposited":10,"lit":true},{"id":"L4","pos":[35,0,-10],"deposited":10,"lit":true},{"id":"L5","pos":[-35,0,-10],"deposited":10,"lit":true},{"id":"L6","pos":[20,0,-35],"deposited":10,"lit":true},{"id":"L7","pos":[0,0,0],"deposited":0,"lit":false}],"shades":[],"motes_active":0,"motes":[],"drifters":[],"charms":[{"id":"C1","pos":[30,0,25],"available":true,"respawn_s":0},{"id":"C2","pos":[-30,0,25],"available":true,"respawn_s":0}]}
+{"type":"event","tick":0,"name":"night_start","data":{"night":3}}
+{"type":"event","tick":1,"name":"deposit","data":{"lantern_id":"L7","amount":10,"deposited":10}}
+{"type":"event","tick":1,"name":"lantern_lit","data":{"lantern_id":"L7"}}
+{"type":"event","tick":1,"name":"game_over","data":{"result":"won","reason":"all_lit"}}
+{"type":"end","ticks":1,"state":"won","score":1068}

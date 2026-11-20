@@ -1,0 +1,333 @@
+{
+  "generated_at": "2026-11-20T09:41:18.579Z",
+  "node": "v26.13.1",
+  "platform": "win32",
+  "arch": "x64",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12450HX",
+  "tests_exit_code": 0,
+  "runs": [
+    {
+      "scenario": "movement-regression",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "0998ae63964ad3fab72e40e657ed58dbeb390b0311aa84fa1dd3c29ef617b601",
+      "headless_ms": 182,
+      "end": {
+        "type": "end",
+        "ticks": 60,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "dash-air",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "d6dd3d1c27222c3d2d691b7e66303b134a7217a18b4ad0c599e2eab03f4eba52",
+      "headless_ms": 158,
+      "end": {
+        "type": "end",
+        "ticks": 12,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "pulse-3d",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "de370fd7010ac07d85698f42fe1fd5c22ef68e561d091aeb80b1cff4bcc1539a",
+      "headless_ms": 218,
+      "end": {
+        "type": "end",
+        "ticks": 20,
+        "state": "playing",
+        "score": 5
+      }
+    },
+    {
+      "scenario": "hit-drops",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "5808bd88d2f88d975d2ee5897f0a1c9f6276761e15b0d89841f2c4144f6cbb78",
+      "headless_ms": 164,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "fall-respawn",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "ace9468adfa738929216b27b2b8ebe9ba273d2c225eb3524f7e0c8c07d60b4df",
+      "headless_ms": 157,
+      "end": {
+        "type": "end",
+        "ticks": 61,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "pause",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "8e419396c3b45f9afd30b3e8eee4edb3e13ba2e710b02000c3c6a02cb5812932",
+      "headless_ms": 157,
+      "end": {
+        "type": "end",
+        "ticks": 120,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "charm",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "6a3e84d466eaae35b1a9ee0647097c61d0275c95627f599690bb3004cd078705",
+      "headless_ms": 175,
+      "end": {
+        "type": "end",
+        "ticks": 15,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "drifter-steal",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "7e0c5ac5d79361ebdc4623eec622454d62330ce5d0c9ad942b41790639eda169",
+      "headless_ms": 171,
+      "end": {
+        "type": "end",
+        "ticks": 2,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "drifter-drop",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "10e40fe9eab83bf517c4727a1d890aedd3ad526d94009f58130e2a564018fb43",
+      "headless_ms": 159,
+      "end": {
+        "type": "end",
+        "ticks": 120,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "pad-night2",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "41803b4abcdca11749041a71f6e80eaaf579c066b62ead20eb1d586282ddc329",
+      "headless_ms": 157,
+      "end": {
+        "type": "end",
+        "ticks": 100,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "bridge",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "24c80bbf8e2de9ffc8e98d3effcdb76fab2005015b62a660548b1afbf7c88ff5",
+      "headless_ms": 154,
+      "end": {
+        "type": "end",
+        "ticks": 100,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "pad-night3",
+      "night": 3,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "8575d005d08ed98069011088653ac1b98f0c9f41e4f7cc999d1e324ca7afb451",
+      "headless_ms": 170,
+      "end": {
+        "type": "end",
+        "ticks": 56,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "ramp-night3",
+      "night": 3,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "6a1e49d169e564d86ce531bc3f75a33cadf5d7b15e67eb8a96615f307ee94fb0",
+      "headless_ms": 175,
+      "end": {
+        "type": "end",
+        "ticks": 60,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "wind-night3",
+      "night": 3,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "50285c0f0f982f2689f25c3ec5d7a56c4a080682a75aa369afeaa3709b8c477c",
+      "headless_ms": 185,
+      "end": {
+        "type": "end",
+        "ticks": 2100,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "spawn-night2",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "5585c51829d5dea9b531f4d81ca21dd93d06e07ddaa4f9ef56a4b6a873616323",
+      "headless_ms": 213,
+      "end": {
+        "type": "end",
+        "ticks": 2400,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "mote-spawn",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "fb6a0d131f636790f64c3e3dc923b98dbd98c68168131546efafbd9602c0fee8",
+      "headless_ms": 157,
+      "end": {
+        "type": "end",
+        "ticks": 480,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "win-night1",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "ad1ce8c9255936d9f48cae7de9523b443cfc599eafcc1cd9fe9eb342c62215f5",
+      "headless_ms": 146,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 948
+      }
+    },
+    {
+      "scenario": "duration-night1",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "7aff40f40dcecc07e8919859abb82303e9c1a64c2423402868efe406f03a3030",
+      "headless_ms": 422,
+      "end": {
+        "type": "end",
+        "ticks": 18000,
+        "state": "lost",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "win-night2",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "2ec1173e46fc4a79317151e83add2dacd337d7f62aed7c697e7679937f417913",
+      "headless_ms": 143,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 1008
+      }
+    },
+    {
+      "scenario": "duration-night2",
+      "night": 2,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "030ddf3965f339916ef89757076c82fb33c0d9a49b8c8f5c5e9194e4c1ee65b8",
+      "headless_ms": 1047,
+      "end": {
+        "type": "end",
+        "ticks": 19800,
+        "state": "lost",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "win-night3",
+      "night": 3,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "e9f2cb3ecfde2f19936a4028dffb5052c55b2ce4062cc6cb938b3e4b5035a125",
+      "headless_ms": 166,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 1068
+      }
+    },
+    {
+      "scenario": "duration-night3",
+      "night": 3,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "f2a7434924d27c4f63fd188d55b9a66fa5f7a4ab23399a99c0360f66cc3b1e0a",
+      "headless_ms": 1575,
+      "end": {
+        "type": "end",
+        "ticks": 21600,
+        "state": "lost",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "full-route",
+      "night": 1,
+      "repeat_byte_identical": true,
+      "assertions_passed": true,
+      "sha256": "44f1ce784a778b3dc9b00f946400ab47d43520554e35152f6f6759b0447eee21",
+      "headless_ms": 313,
+      "end": {
+        "type": "end",
+        "ticks": 1427,
+        "state": "won",
+        "score": 1702
+      }
+    }
+  ],
+  "browser_fps": "unverified; use pause menu benchmark at1280x720"
+}
